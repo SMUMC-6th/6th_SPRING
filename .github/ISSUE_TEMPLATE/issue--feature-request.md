@@ -1,6 +1,6 @@
 ---
-name: Add a title
-about: Add a description
+name: 'Issue: Feature Request'
+about: 구현할 기능을 간단히 소개해주세요.
 title: ''
 labels: ''
 assignees: ''
