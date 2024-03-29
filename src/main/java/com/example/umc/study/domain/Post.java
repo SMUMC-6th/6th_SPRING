@@ -29,4 +29,7 @@ public class Post {
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post")
+    private List<Reply> replies = new ArrayList<>();
+
 }
