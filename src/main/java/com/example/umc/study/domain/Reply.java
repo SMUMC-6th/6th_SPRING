@@ -1,24 +1,20 @@
 package com.example.umc.study.domain;
 
-import com.example.umc.study.domain.mapping.PostCategory;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class Post {
+public class Reply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "reply_id")
     private Long id;
 
     private String title;
@@ -29,9 +25,7 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
-    private List<PostCategory> postCategories = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post")
-    private List<Reply> replies = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 }
