@@ -5,12 +5,13 @@ import com.example.umc.study.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-
+@Builder
 public class PostCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
