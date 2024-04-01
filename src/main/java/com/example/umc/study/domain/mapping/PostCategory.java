@@ -1,5 +1,7 @@
-package com.example.umc.study.domain;
+package com.example.umc.study.domain.mapping;
 
+import com.example.umc.study.domain.Category;
+import com.example.umc.study.domain.Post;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
