@@ -1,5 +1,6 @@
 package com.example.umc.study.domain;
 
+import com.example.umc.study.domain.common.BaseEntity;
 import com.example.umc.study.domain.mapping.PostCategory;
 import jakarta.persistence.*;
 import lombok.*;
@@ -12,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
-public class Post {
+public class Post extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
