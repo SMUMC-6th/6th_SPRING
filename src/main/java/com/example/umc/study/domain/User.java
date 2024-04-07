@@ -1,10 +1,8 @@
 package com.example.umc.study.domain;
 
+import com.example.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +11,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
-public class User {
+@Getter
+public class User extends BaseEntity {
     //user의 기본 키를 넣어주기
     //id 어노테이션과 generated value 어노테이션을 붙어주는데 generation type 전략에는 여러가지가 있음
     @Id
