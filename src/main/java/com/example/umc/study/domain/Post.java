@@ -45,4 +45,9 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
+
+    // 연관관계 편의 메소드
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
