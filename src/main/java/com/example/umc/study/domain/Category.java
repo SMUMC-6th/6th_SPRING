@@ -1,12 +1,11 @@
 package com.example.umc.study.domain;
 
-import com.example.umc.study.common.BaseEntity;
+import com.example.umc.study.domain.common.BaseEntity;
 import com.example.umc.study.domain.mapping.PostCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Entity
@@ -15,6 +14,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Category extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
