@@ -2,18 +2,18 @@ package com.example.umc.study.domain.mapping;
 
 import com.example.umc.study.domain.Category;
 import com.example.umc.study.domain.Post;
+import com.example.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
+@Builder
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
-@Builder
-public class PostCategory {
+public class PostCategory extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_category_id")
