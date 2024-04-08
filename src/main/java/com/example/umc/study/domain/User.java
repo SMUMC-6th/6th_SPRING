@@ -1,5 +1,6 @@
 package com.example.umc.study.domain;
 
+import com.example.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
-public class User {
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
