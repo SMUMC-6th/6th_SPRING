@@ -1,4 +1,4 @@
-package com.example.umc.study.Service;
+package com.example.umc.study.service;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.TestHandler;
