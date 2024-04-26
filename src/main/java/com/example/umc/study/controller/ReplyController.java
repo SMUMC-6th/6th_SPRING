@@ -8,6 +8,7 @@ import com.example.umc.study.dto.response.ReplyResponseDTO;
 import com.example.umc.study.service.ReplyService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,8 +44,14 @@ public class ReplyController {
     }
 
     @DeleteMapping("/replies/{replyId}")
-    public void deleteReply(@PathVariable Long replyId) {
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제에 성공하였습니다.");
     }
 
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> findAllByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.findAllByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
 }

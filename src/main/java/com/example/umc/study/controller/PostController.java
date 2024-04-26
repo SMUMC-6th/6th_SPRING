@@ -10,6 +10,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,11 +25,10 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-    private final EntityManager entityManager;
 
-    @PostMapping("/posts")
-    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
-        Post post = postService.createPost(createPostDTO);
+    @PostMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@PathVariable Long userId, @RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
+        Post post = postService.createPost(userId, createPostDTO);
         return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
     }
 
@@ -45,7 +45,20 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
-    public void deletePost(@PathVariable Long postId) {
+    public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제에 성공하였습니다.");
+    }
+
+    @GetMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO, @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO,postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 }
