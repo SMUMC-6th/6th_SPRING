@@ -10,4 +10,9 @@ public class UserRequestDTO {
     public static class JoinDTO {
         private String name;
     }
+
+    @Getter
+    public static class UpdateUserDTO {
+        private String name;
+    }
 }
