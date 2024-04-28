@@ -1,8 +1,6 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.ReplyRequestDTO;
-import com.example.umc.study.dto.ReplyResponseDTO;
 
 import java.util.List;
 

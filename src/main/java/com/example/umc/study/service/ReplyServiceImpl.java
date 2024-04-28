@@ -1,10 +1,8 @@
 package com.example.umc.study.service;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
-import com.example.umc.study.apiPayload.exception.handler.ReplyHandler;
 import com.example.umc.study.converter.ReplyConverter;
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.repository.ReplyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

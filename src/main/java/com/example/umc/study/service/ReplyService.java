@@ -1,7 +1,6 @@
 package com.example.umc.study.service;
 
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.ReplyRequestDTO;
 
 import java.util.List;
 
