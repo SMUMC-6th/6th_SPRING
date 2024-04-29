@@ -3,10 +3,7 @@ package com.example.umc.study.domain;
 import com.example.umc.study.domain.common.BaseEntity;
 import com.example.umc.study.domain.mapping.PostCategory;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
+@Getter
 public class Post extends BaseEntity {
 
     @Id
