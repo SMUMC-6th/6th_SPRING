@@ -1,7 +1,7 @@
 package com.example.umc.study.apiPayload;
 
 import com.example.umc.study.apiPayload.code.BaseCode;
-import com.example.umc.study.apiPayload.code.stauts.SuccessStatus;
+import com.example.umc.study.apiPayload.code.status.SuccessStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

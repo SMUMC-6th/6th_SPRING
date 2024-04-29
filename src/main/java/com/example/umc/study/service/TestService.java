@@ -1,6 +1,6 @@
 package com.example.umc.study.service;
 
-import com.example.umc.study.apiPayload.code.stauts.ErrorStatus;
+import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.TestHandler;
 import org.springframework.stereotype.Service;
 
