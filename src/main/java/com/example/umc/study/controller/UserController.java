@@ -36,4 +36,9 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
 
+    @DeleteMapping("/api/v1/users/{userId}")
+    public void deleteUser(@PathVariable Long userId){
+        userService.deleteUser(userId);
+    }
+
 }
