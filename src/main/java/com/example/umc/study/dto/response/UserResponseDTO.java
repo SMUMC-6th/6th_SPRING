@@ -15,7 +15,7 @@ public class UserResponseDTO {
     @Builder
     public static class JoinResultDTO{
         private Long userId;
-        private LocalDateTime createdAt;
+        private LocalDateTime createAt;
     }
 
     @Getter
@@ -25,6 +25,7 @@ public class UserResponseDTO {
     public static class UserPreviewDTO {
         private Long userId;
         private String name;
+        private Long categoryId;
         private LocalDateTime updateAt;
         private LocalDateTime createAt;
     }

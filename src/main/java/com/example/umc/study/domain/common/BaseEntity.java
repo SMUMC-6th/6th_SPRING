@@ -1,5 +1,6 @@
 package com.example.umc.study.domain.common;
 
+import com.example.umc.study.domain.User;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -18,4 +19,6 @@ public class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
+
+
 }

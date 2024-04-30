@@ -16,7 +16,7 @@ public class UserConverter {
     public static UserResponseDTO.JoinResultDTO toJoinResultDTO(User user) {
         return UserResponseDTO.JoinResultDTO.builder()
                 .userId(user.getId())
-                .createdAt(user.getCreatedAt())
+                .createAt(user.getCreatedAt())
                 .build();
     }
 
