@@ -32,10 +32,14 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
     }
 
+    @Transactional(readOnly = true)
+    @Override
     public List<User> readUsers() {
         return userRepository.findAll();
     }
 
+    @Transactional
+    @Override
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() ->new UserHandler(ErrorStatus._NOT_FOUND_USER));
         userRepository.delete(user);
