@@ -24,7 +24,7 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toJoinResultDTO(user));
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/users/{userId}")
     public BaseResponse<UserResponseDTO.UserPreviewDTO> readUser(@PathVariable Long userId) {
         User user = userService.readUser(userId);
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
@@ -36,7 +36,7 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDTO(userList));
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/users/{userId}")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }

@@ -3,6 +3,7 @@ package com.example.umc.study.repository;
 import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 import java.util.List;
 
