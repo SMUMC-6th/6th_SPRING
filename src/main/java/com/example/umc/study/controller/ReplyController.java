@@ -23,7 +23,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/replies/{replyId}")
+    @PostMapping("/replies")
     public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         Reply reply = replyService.createReply(createReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
