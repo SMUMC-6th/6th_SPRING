@@ -16,7 +16,6 @@ public class Reply extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reply_id")
     private Long id;
-    private String title;
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,4 +25,11 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    public void setPost(Post post) {
+        this.post = post;
+    }
 }
