@@ -39,7 +39,7 @@ public class ReplySeriveImpl implements ReplyService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<Reply> replyList(){
+    public List<Reply> readReplies(){
         return replyRepository.findAll();
     }
 

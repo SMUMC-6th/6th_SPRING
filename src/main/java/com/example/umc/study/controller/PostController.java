@@ -34,7 +34,7 @@ public class PostController {
 
     // userId로 게시물 불러오기
     @GetMapping("/users/{userId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> readPostByUserId(@PathVariable Long userId){
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostByUserId(@PathVariable Long userId){
         List<Post> postList = postService.readPostsByUserId(userId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
@@ -47,6 +47,6 @@ public class PostController {
     }
 
     // 게시물 삭제하기
-    @DeleteMapping("/posts/delete/{postId}")
+    @DeleteMapping("/delete/{postId}")
     public void deletePost(@PathVariable Long postId){postService.deletePost(postId);}
 }

@@ -33,7 +33,7 @@ public class ReplyController {
 
     // postId로 댓글 불러오기
     @GetMapping("/posts/{postId}")
-    public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReplyByPostId(@PathVariable Long postId){
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplyByPostId(@PathVariable Long postId){
         List<Reply> replyList = replyService.findAllByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
