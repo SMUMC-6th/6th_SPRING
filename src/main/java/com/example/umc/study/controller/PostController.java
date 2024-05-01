@@ -18,7 +18,7 @@ public class PostController {
     private final PostService postService;
 
     //게시글 등록
-    @PostMapping("/api/v1/post")
+    @PostMapping("/api/v1/posts")
     public BaseResponse<PostResponseDTO.UploadResultDTO> createPost(@RequestBody PostRequestDTO.UploadDTO uploadDTO) {
         Post post = postService.createPost(uploadDTO);
         return BaseResponse.onSuccess(PostConverter.toUploadResultDTO(post));
@@ -42,7 +42,6 @@ public class PostController {
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }
-
 
 
 }
