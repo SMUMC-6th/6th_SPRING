@@ -4,6 +4,8 @@ import com.example.umc.study.domain.Reply;
 import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.dto.ReplyResponseDTO;
 
+import java.util.List;
+
 public class ReplyConverter {
 
     public static Reply toReply(ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
@@ -30,4 +32,15 @@ public class ReplyConverter {
                 .createAt(reply.getCreatedAt())
                 .build();
     }
+
+    public static ReplyResponseDTO.ReplyPreviewListDTO toJoinReplyPreviewListDTO(List<Reply> replyList) {
+        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList = replyList.stream()
+                .map(ReplyConverter::toReplyPreviewDTO)
+                .toList();
+
+        return ReplyResponseDTO.ReplyPreviewListDTO.builder()
+                .replyPreviewDTOList(replyPreviewDTOList)
+                .build();
+    }
 }
+

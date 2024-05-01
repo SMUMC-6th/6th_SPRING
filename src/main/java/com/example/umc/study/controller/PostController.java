@@ -14,6 +14,8 @@ import com.example.umc.study.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class PostController {
@@ -28,6 +30,17 @@ public class PostController {
     public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
+
+    @DeleteMapping("/api/v1/posts/{postId}")
+    public void deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+    }
+
+    @GetMapping("/api/v1/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
+        List<Post> postList = postService.readPosts();
+        return BaseResponse.onSuccess(PostConverter.toJoinPostPreviewListDTO(postList));
     }
 
 }

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ReplyResponseDTO {
     @Getter
@@ -29,5 +30,13 @@ public class ReplyResponseDTO {
         private String content;
         private LocalDateTime updateAt;
         private LocalDateTime createAt;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class ReplyPreviewListDTO {
+        List<ReplyPreviewDTO> replyPreviewDTOList;
     }
 }

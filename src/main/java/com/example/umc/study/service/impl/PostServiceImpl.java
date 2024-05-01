@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
@@ -34,6 +36,19 @@ public class PostServiceImpl implements PostService {
             throw new PostHandler(ErrorStatus._NOT_FOUND_POST);
         });
         return post;
+    }
+
+    @Transactional
+    @Override
+    public void deletePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        postRepository.delete(post);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Post> readPosts() {
+        return postRepository.findAll();
     }
 
 }

@@ -7,6 +7,8 @@ import com.example.umc.study.dto.PostResponseDTO;
 import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.dto.ReplyResponseDTO;
 
+import java.util.List;
+
 public class PostConverter {
 
     public static Post toPost(PostRequestDTO.JoinPostDTO joinPostDTO) {
@@ -32,4 +34,15 @@ public class PostConverter {
                 .updateAt(post.getUpdatedAt())
                 .build();
     }
+
+    public static PostResponseDTO.PostPreviewListDTO toJoinPostPreviewListDTO(List<Post> postList) {
+        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList = postList.stream()
+                .map(PostConverter::toPostPreviewDTO)
+                .toList();
+
+        return PostResponseDTO.PostPreviewListDTO.builder()
+                .postPreviewDTOList(postPreviewDTOList)
+                .build();
+    }
+
 }
