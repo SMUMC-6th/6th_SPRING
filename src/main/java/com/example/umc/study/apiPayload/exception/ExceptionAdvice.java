@@ -2,7 +2,7 @@ package com.example.umc.study.apiPayload.exception;
 
 import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.apiPayload.code.ErrorReasonDTO;
-import com.example.umc.study.apiPayload.code.stauts.ErrorStatus;
+import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import java.util.Optional;
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 
-    @org.springframework.web.bind.annotation.ExceptionHandler
+    @ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         String errorMessage = e.getConstraintViolations().stream()
                 .map(constraintViolation -> constraintViolation.getMessage())

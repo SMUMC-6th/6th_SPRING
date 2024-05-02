@@ -1,0 +1,13 @@
+package com.example.umc.study.repository;
+
+import com.example.umc.study.domain.Post;
+import com.example.umc.study.domain.User;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+
+import java.util.List;
+
+public interface PostRepository extends JpaRepository<Post, Long> {
+
+    List<Post> findAllByUser(User user);
+}
