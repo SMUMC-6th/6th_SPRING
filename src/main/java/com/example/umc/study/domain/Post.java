@@ -20,6 +20,7 @@ public class Post extends BaseEntity {
     @Column(name = "category_id")
     private Long id;
     private String title;
+    private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -30,4 +31,8 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
