@@ -13,29 +13,30 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/api/v1/posts")
+    @PostMapping("/posts")
     public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@RequestBody PostRequestDTO.JoinDTO joinDTO) {
         Post post = postService.createPost(joinDTO);
         return BaseResponse.onSuccess(PostConverter.toJoinResultDTO(post));
     }
 
-    @GetMapping("/api/v1/posts/{postId}")
+    @GetMapping("/posts/{postId}")
     public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
-    @GetMapping("/api/v1/posts")
+    @GetMapping("/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
-    @DeleteMapping("/api/v1/posts/{postId}")
+    @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return BaseResponse.onSuccess("삭제 되었습니다.");

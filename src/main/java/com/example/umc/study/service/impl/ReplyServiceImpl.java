@@ -15,12 +15,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
 
     @Override
-    @Transactional
     public Reply createReply(ReplyRequestDTO.JoinDTO joinDTO) {
         return replyRepository.save(ReplyConverter.toReply(joinDTO));
     }
@@ -38,7 +38,6 @@ public class ReplyServiceImpl implements ReplyService {
     }
 
     @Override
-    @Transactional
     public void deleteReply(Long id) {
         Reply reply = replyRepository.findById(id).orElseThrow(() -> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
         replyRepository.delete(reply);
