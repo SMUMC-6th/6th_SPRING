@@ -27,4 +27,12 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public void setUser(User setUser) {
+        user = setUser;
+    }
+
+    public void setPost(Post setPost) {
+        post = setPost;
+    }
 }
