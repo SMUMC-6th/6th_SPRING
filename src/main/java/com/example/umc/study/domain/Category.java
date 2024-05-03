@@ -28,7 +28,7 @@ public class Category extends BaseEntity {
     @Column(name = "category_id")
     private Long id;
 
-    private String name;
+    private String title;
 
     @OneToMany(mappedBy = "category")
     private List<PostCategory> postCategories = new ArrayList<>();
