@@ -37,7 +37,8 @@ public class UserController {
     }
 
     @DeleteMapping("/users/{userId}")
-    public void deleteUser(@PathVariable Long userId) {
+    public BaseResponse<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }
