@@ -15,19 +15,20 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
     @Override
-    @Transactional
     public Post createPost(PostRequestDTO.UploadDTO uploadDTO) {
         Post post = PostConverter.toPost(uploadDTO);
         return postRepository.save(post);
     }
 
+    @Transactional(readOnly = true)
     @Override
-    @Transactional(readOnly = true)  //readOnly는 데이터베이스를 건들지 않는 것으로 직접적으로 데이터를 변화시켜야하는 create, update, delete에는 쓰면 안되는 옵션
+    //readOnly는 데이터베이스를 건들지 않는 것으로 직접적으로 데이터를 변화시켜야하는 create, update, delete에는 쓰면 안되는 옵션
     public Post readPost(Long postId) {
         return postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
     }
@@ -38,7 +39,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() ->new PostHandler(ErrorStatus._NOT_FOUND_POST));

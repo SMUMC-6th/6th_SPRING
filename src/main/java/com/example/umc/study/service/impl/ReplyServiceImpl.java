@@ -16,31 +16,31 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    @Transactional
+
     @Override
     public Reply createReply(ReplyRequestDTO.AddDTO addDTO) {
         Reply reply = ReplyConverter.toReply(addDTO);
         return replyRepository.save(reply);
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public Reply readReply(Long replyId) {
         return replyRepository.findById(replyId).orElseThrow(() -> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public List<Reply> readReplies() {
         return replyRepository.findAll();
     }
 
     @Override
-    @Transactional
     public void deleteReply(Long replyId) {
         Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
         replyRepository.delete(reply);
