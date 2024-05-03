@@ -47,7 +47,10 @@ public class ReplyController {
 
     // 댓글 삭제하기
     @DeleteMapping("replies/{replyId}")
-    public void deleteReply(@PathVariable Long replyId){replyService.deleteReply(replyId);}
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId){
+        replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
 }
 
 

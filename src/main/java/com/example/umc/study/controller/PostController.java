@@ -48,5 +48,7 @@ public class PostController {
 
     // 게시물 삭제하기
     @DeleteMapping("/posts/{postId}")
-    public void deletePost(@PathVariable Long postId){postService.deletePost(postId);}
+    public BaseResponse<String> deletePost(@PathVariable Long postId){postService.deletePost(postId);
+    return BaseResponse.onSuccess("삭제되었습니다.");
+    }
 }
