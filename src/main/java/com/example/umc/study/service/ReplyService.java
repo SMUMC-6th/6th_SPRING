@@ -9,7 +9,6 @@ public interface ReplyService {
     Reply createReply(ReplyRequestDto.JoinDto replyDTO);
 
     Reply readReply(Long replyId);
-    List<Reply> readReply();
 
     void deleteReply(Long replyId);
 
