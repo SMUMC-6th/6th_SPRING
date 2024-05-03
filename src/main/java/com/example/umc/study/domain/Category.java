@@ -18,7 +18,7 @@ public class Category extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
-    private String title;
+    private String name;
 
     @OneToMany(mappedBy = "category")
     private List<PostCategory> postCategories = new ArrayList<>();

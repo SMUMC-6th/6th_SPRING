@@ -40,6 +40,13 @@ public class UserServiceImpl implements UserService {
         });
         return user;
     }
+    //user 업데이트
+    @Override
+    public User updateUser(UserRequestDTO.UpdateUserDTO updateUserDTO, Long userId){
+        User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        user.update(updateUserDTO.getName());
+        return user;
+    }
 
     //user 삭제
     @Override

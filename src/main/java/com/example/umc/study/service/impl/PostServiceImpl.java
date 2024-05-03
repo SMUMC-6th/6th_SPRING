@@ -51,6 +51,13 @@ public class PostServiceImpl implements PostService {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         return postRepository.findAllByUser(user);
     }
+    //post 수정
+    @Override
+    public Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO,Long postId){
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        post.update(updatePostDTO.getTitle(), updatePostDTO.getContent());
+        return post;
+    }
 
     @Override
     public void deletePost(Long postId){
