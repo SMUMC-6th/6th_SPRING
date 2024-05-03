@@ -29,9 +29,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public User readUser(Long userId) {
-        User user = userRepository.findById(userId)
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new UserHandler(ErrorStatus._USER_NOT_FOUND));
-        return user;
     }
 
     @Override

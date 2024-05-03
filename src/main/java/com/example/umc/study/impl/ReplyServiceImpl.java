@@ -44,9 +44,8 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     @Transactional(readOnly = true)
     public Reply readReply(Long replyId) {
-        Reply reply = replyRepository.findById(replyId)
+        return replyRepository.findById(replyId)
                 .orElseThrow(() -> new ReplyHandler(ErrorStatus._REPLY_NOT_FOUND));
-        return reply;
     }
 
     @Override

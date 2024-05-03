@@ -37,9 +37,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public Post readPost(Long postId) {
-        Post post = postRepository.findById(postId)
+        return postRepository.findById(postId)
                 .orElseThrow(() -> new PostHandler(ErrorStatus._POST_NOT_FOUND));
-        return post;
     }
 
     @Override
