@@ -18,14 +18,15 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/posts")
-    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createUser(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
-        Post post = postService.createPost(createPostDTO);
+    @PostMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO,
+                                                                        @PathVariable Long userId) {
+        Post post = postService.createPost(createPostDTO, userId);
         return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
     }
 
     @GetMapping("/posts/{postsId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> readUser(@PathVariable Long postsId) {
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postsId) {
         Post post = postService.readPost(postsId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
@@ -37,7 +38,21 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{postId}")
-    public void deletePost(@PathVariable Long postId) {
+    public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO,
+                                                                   @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO, postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
+
+    @GetMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
     }
 }
