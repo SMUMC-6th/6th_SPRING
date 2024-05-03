@@ -3,6 +3,7 @@ package com.example.umc.study.domain;
 import com.example.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,5 +37,13 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<Reply> replies = new ArrayList<>();
 
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    //연관관계 편의 메소드
+    public void setUser(User user) { this.user = user; }
 
 }

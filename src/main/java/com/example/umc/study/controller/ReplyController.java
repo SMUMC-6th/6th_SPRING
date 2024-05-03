@@ -19,9 +19,11 @@ public class ReplyController {
     private final ReplyService replyService;
 
     //답글 등록
-    @PostMapping("/replies")
-    public BaseResponse<ReplyResponseDTO.AddResultDTO> createReply(@RequestBody ReplyRequestDTO.AddDTO addDTO) {
-        Reply reply = replyService.createReply(addDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies/")
+    public BaseResponse<ReplyResponseDTO.AddResultDTO> createReply(@RequestBody ReplyRequestDTO.AddDTO addDTO,
+                                                                   @PathVariable Long userId,
+                                                                   @PathVariable Long postId) {
+        Reply reply = replyService.createReply(addDTO, userId, postId);
         return BaseResponse.onSuccess(ReplyConverter.toAddResultDTO(reply));
     }
 
@@ -44,4 +46,9 @@ public class ReplyController {
         return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplyByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readReplyByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
 }

@@ -8,11 +8,16 @@ import java.util.List;
 
 public interface PostService {
 
-    Post createPost(PostRequestDTO.UploadDTO uploadDTO);
+    Post createPost(PostRequestDTO.UploadDTO uploadDTO, Long userId);
 
     Post readPost(Long postId);
 
     List<Post> readPosts();
 
     void deletePost(Long postId);
+
+    Post updatePost(PostRequestDTO.updatePostDTO updatePostDTO, Long postId);
+
+    List<Post> readPostByUser(Long userId);
+
 }
