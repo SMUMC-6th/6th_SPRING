@@ -18,9 +18,11 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/replies")
-    public BaseResponse<ReplyResponseDTO.JoinResultDTO> createReply(@RequestBody ReplyRequestDTO.JoinDTO joinDTO) {
-        Reply reply = replyService.createReply(joinDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.JoinResultDTO> createReply(@PathVariable Long userId,
+                                                                    @PathVariable Long postId,
+                                                                    @RequestBody ReplyRequestDTO.JoinDTO joinDTO) {
+        Reply reply = replyService.createReply(userId, postId, joinDTO);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDTO(reply));
     }
 
@@ -34,6 +36,12 @@ public class ReplyController {
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replyList = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
+    }
+
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readPostReplies(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 
     @DeleteMapping("/replies/{replyId}")

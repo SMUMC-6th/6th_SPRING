@@ -18,9 +18,10 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/posts")
-    public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@RequestBody PostRequestDTO.JoinDTO joinDTO) {
-        Post post = postService.createPost(joinDTO);
+    @PostMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@PathVariable Long userId,
+                                                                  @RequestBody PostRequestDTO.JoinDTO joinDTO) {
+        Post post = postService.createPost(userId, joinDTO);
         return BaseResponse.onSuccess(PostConverter.toJoinResultDTO(post));
     }
 
@@ -36,9 +37,22 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
+    @GetMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
+    }
+
     @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@PathVariable Long postId,
+                                                                   @RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO) {
+        Post post = postService.updatePost(postId, updatePostDTO);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 }
