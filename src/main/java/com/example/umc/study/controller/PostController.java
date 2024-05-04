@@ -14,15 +14,17 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
 
     @PostMapping("users/{userId}/posts")
     public BaseResponse<PostResponseDto.JoinResultDto> createPost(
-            @RequestBody PostRequestDto.JoinDto joinDto
+            @PathVariable Long userId,
+            @RequestBody PostRequestDto.CreatePostDto createPostDto
     ) {
-        Post post = postService.createPost(joinDto);
+        Post post = postService.createPost(userId, createPostDto);
         return BaseResponse.onSuccess(PostConverter.toJoinResultDto(post));
     }
 
@@ -37,6 +39,19 @@ public class PostController {
     public BaseResponse<PostResponseDto.PostPreviewListDto> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(postList));
+    }
+
+    @GetMapping("users/{userId}/posts")
+    public BaseResponse<PostResponseDto.PostPreviewListDto> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(posts));
+    }
+
+    @PatchMapping("posts/{postId}")
+    public BaseResponse<PostResponseDto.PostPreviewDto> updateUser(@RequestBody PostRequestDto.UpdatePostDto updatePostDto,
+                                                                   @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDto, postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDto(post));
     }
 
     @DeleteMapping("posts/{postId}")

@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
+@CrossOrigin("*")
 public class UserController {
 
     private final UserService userService;
@@ -37,6 +38,13 @@ public class UserController {
     public BaseResponse<UserResponseDto.UserPreviewListDto> readUsers() {
         List<User> userList = userService.readUsers();
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDto(userList));
+    }
+
+    @PatchMapping("users/{userId}")
+    public BaseResponse<UserResponseDto.UserPreviewDto> updateUser(@RequestBody UserRequestDto.UpdateUserDto updateUserDto,
+                                                                   @PathVariable Long userId) {
+        User user = userService.updateUser(updateUserDto, userId);
+        return BaseResponse.onSuccess(UserConverter.toUserPreviewDto(user));
     }
 
     @DeleteMapping("users/{userId}")

@@ -14,15 +14,18 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/")
+@CrossOrigin("*")
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    public BaseResponse<ReplyResponseDto.JoinResultDto> createPost(
-            @RequestBody ReplyRequestDto.JoinDto joinDto
     @PostMapping("users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDto.JoinResultDto> createReply(
+            @PathVariable Long userId,
+            @PathVariable Long postId,
+            @RequestBody ReplyRequestDto.CreateReplyDto createReplyDto
     ) {
-        Reply reply = replyService.createReply(joinDto);
+        Reply reply = replyService.createReply(userId, postId, createReplyDto);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDto(reply));
     }
 
@@ -33,8 +36,13 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDto(reply));
     }
 
-    @GetMapping("/api/v1/replies")
-    public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readPosts() {
+    @GetMapping("posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readRepliesByPost(
+            @PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDto(replies));
+    }
+
     @GetMapping("replies")
     public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readReplies() {
         List<Reply> postList = replyService.readReplies();
