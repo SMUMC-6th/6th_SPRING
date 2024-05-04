@@ -13,20 +13,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/")
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/api/v1/replies")
     public BaseResponse<ReplyResponseDto.JoinResultDto> createPost(
             @RequestBody ReplyRequestDto.JoinDto joinDto
+    @PostMapping("users/{userId}/posts/{postId}/replies")
     ) {
         Reply reply = replyService.createReply(joinDto);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDto(reply));
     }
 
-    @GetMapping("/api/v1/replies/{replyId}")
-    public BaseResponse<ReplyResponseDto.ReplyPreviewDto> readPost(
+    @GetMapping("replies/{replyId}")
+    public BaseResponse<ReplyResponseDto.ReplyPreviewDto> readReply(
             @PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDto(reply));
@@ -34,6 +35,8 @@ public class ReplyController {
 
     @GetMapping("/api/v1/replies")
     public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readPosts() {
+    @GetMapping("replies")
+    public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readReplies() {
         List<Reply> postList = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDto(postList));
     }

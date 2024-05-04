@@ -15,12 +15,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public User createUser(UserRequestDto.JoinDto joinDto) {
         User user = UserConverter.toUser(joinDto);
         return userRepository.save(user);
@@ -42,7 +42,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @Transactional
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
