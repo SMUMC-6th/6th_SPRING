@@ -38,9 +38,10 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDto(postList));
     }
 
-    @DeleteMapping("/api/v1/replies/{replyId}")
-    public void deletePost(
+    @DeleteMapping("replies/{replyId}")
+    public BaseResponse<String> deleteReply(
             @PathVariable Long replyId) {
         replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }

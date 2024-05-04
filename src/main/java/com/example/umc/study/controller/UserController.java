@@ -38,9 +38,10 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDto(userList));
     }
 
-    @DeleteMapping("/api/v1/users/{userId}")
-    public void deleteUser(
+    @DeleteMapping("users/{userId}")
+    public BaseResponse<String> deleteUser(
             @PathVariable Long userId) {
         userService.deleteUser(userId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }

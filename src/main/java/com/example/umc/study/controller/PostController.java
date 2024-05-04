@@ -38,9 +38,10 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(postList));
     }
 
-    @DeleteMapping("/api/v1/posts/{postId}")
-    public void deletePost(
+    @DeleteMapping("posts/{postId}")
+    public BaseResponse<String> deletePost(
             @PathVariable Long postId) {
         postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }
