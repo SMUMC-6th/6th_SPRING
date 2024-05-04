@@ -28,4 +28,8 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
+    //setter 어노테이션을 넣는건 좋지않기에 따로 빼줌
+    public void setUser(User user) { this.user = user; }
+
+    public void setPost(Post post) { this.post = post; }
 }

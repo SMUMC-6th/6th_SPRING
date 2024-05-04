@@ -13,33 +13,42 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class ReplyController {
 
     private final ReplyService replyService;
 
     //답글 등록
-    @PostMapping("/api/v1/replies")
-    public BaseResponse<ReplyResponseDTO.AddResultDTO> createReply(@RequestBody ReplyRequestDTO.AddDTO addDTO) {
-        Reply reply = replyService.createReply(addDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies/")
+    public BaseResponse<ReplyResponseDTO.AddResultDTO> createReply(@RequestBody ReplyRequestDTO.AddDTO addDTO,
+                                                                   @PathVariable Long userId,
+                                                                   @PathVariable Long postId) {
+        Reply reply = replyService.createReply(addDTO, userId, postId);
         return BaseResponse.onSuccess(ReplyConverter.toAddResultDTO(reply));
     }
 
     //답글 조회
-    @GetMapping("/api/v1/replies/{replyId}")
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies")
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replyList = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
 
-    @DeleteMapping("/api/v1/replies/{replyId}")
-    public void deleteReply(@PathVariable Long replyId) {
+    @DeleteMapping("/replies/{replyId}")
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplyByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readReplyByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
 }

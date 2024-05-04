@@ -11,4 +11,10 @@ public class PostRequestDTO {
 
         private String content;
     }
+
+    @Getter
+    public static class updatePostDTO {
+        private String title;
+        private String content;
+    }
 }
