@@ -13,30 +13,40 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/api/v1/replies")
-    public BaseResponse<ReplyResponseDTO.JoinResultDTO> createReply(@RequestBody ReplyRequestDTO.JoinDTO joinDTO) {
-        Reply reply = replyService.createReply(joinDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.JoinResultDTO> createReply(@PathVariable Long userId,
+                                                                    @PathVariable Long postId,
+                                                                    @RequestBody ReplyRequestDTO.JoinDTO joinDTO) {
+        Reply reply = replyService.createReply(userId, postId, joinDTO);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies/{replyId}")
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies")
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replyList = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
 
-    @DeleteMapping("/api/v1/replies/{replyId}")
-    public void deleteReply(@PathVariable Long replyId) {
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readPostReplies(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
+
+    @DeleteMapping("/replies/{replyId}")
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }
