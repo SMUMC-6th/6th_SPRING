@@ -13,28 +13,29 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor // DI
+@RequestMapping("/api/v1")
 public class ReplyController {
     private final ReplyService replyService;
 
-    @PostMapping("/api/v1/replies/{replyId}")
+    @PostMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         Reply reply = replyService.createReply(createReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies/{replyId}")
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies")
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replies = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 
-    @DeleteMapping("/api/v1/replies/{replyId}")
+    @DeleteMapping("/replies/{replyId}")
     public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
         return BaseResponse.onSuccess("삭제되었습니다.");

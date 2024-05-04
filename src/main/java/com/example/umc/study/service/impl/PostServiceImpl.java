@@ -18,12 +18,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
     @Override
-    @Transactional
     public Post createPost(Long userId, PostRequestDTO.CreatePostDTO createPostDTO) {
         Post post = PostConverter.toPost(createPostDTO);
         User user = userRepository.findById(userId).orElseThrow(()->{
@@ -34,7 +34,7 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // 우선 적용됨.
     @Override
     public Post readPost(Long postId) {
         return postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
@@ -47,7 +47,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST)); // Post니까 postHandler로
         postRepository.delete(post);
