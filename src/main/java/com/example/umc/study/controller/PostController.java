@@ -3,6 +3,7 @@ package com.example.umc.study.controller;
 import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.converter.PostConverter;
 import com.example.umc.study.domain.Post;
+import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.PostRequestDTO;
 import com.example.umc.study.dto.PostResponseDTO;
 import com.example.umc.study.service.PostService;
@@ -41,5 +42,15 @@ public class PostController {
         return BaseResponse.onSuccess("삭제되었습니다.");
     }
 
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO, @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO,postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
 
+    @GetMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
+    }
 }

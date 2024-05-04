@@ -1,6 +1,4 @@
 package com.example.umc.study.dto;
-
-import com.example.umc.study.domain.User;
 import lombok.*;
 
 import java.time.LocalDateTime;

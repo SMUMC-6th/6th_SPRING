@@ -52,4 +52,19 @@ public class PostServiceImpl implements PostService {
         postRepository.delete(post);
     }
 
+    @Override
+    public Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        post.update(updatePostDTO.getTitle(),updatePostDTO.getContent()); // title과 content 둘 다 update
+        return post;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> readPostsByUser(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new UserHandler(ErrorStatus. _NOT_FOUND_USER);
+        });
+        return postRepository.findAllByUser(user);
+    }
 }

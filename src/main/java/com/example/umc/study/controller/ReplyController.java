@@ -17,9 +17,9 @@ import java.util.List;
 public class ReplyController {
     private final ReplyService replyService;
 
-    @PostMapping("/replies/{replyId}")
-    public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
-        Reply reply = replyService.createReply(createReplyDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies/{replyId}")
+    public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@PathVariable Long userId, @PathVariable Long postId, @RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
+        Reply reply = replyService.createReply(userId, postId, createReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
     }
 
@@ -39,6 +39,13 @@ public class ReplyController {
     public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
         return BaseResponse.onSuccess("삭제되었습니다.");
+    }
+
+    //findAllByPost
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 
 }
