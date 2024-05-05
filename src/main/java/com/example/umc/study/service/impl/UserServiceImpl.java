@@ -41,4 +41,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         userRepository.delete(user);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<User> readUsers() {
+        return userRepository.findAll();
+    }
 }

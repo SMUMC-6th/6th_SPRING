@@ -33,10 +33,19 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
+/*
     @DeleteMapping("/api/v1/replies/{replyId}")
     public void deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
     }
+*/
+
+    @DeleteMapping("/api/v1/replies/{replyId}")
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
+        replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
+
 
     @GetMapping("/api/v1/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {

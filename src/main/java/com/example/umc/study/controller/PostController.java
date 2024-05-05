@@ -32,10 +32,21 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
+/*
     @DeleteMapping("/api/v1/posts/{postId}")
     public void deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
     }
+*/
+
+    @DeleteMapping("/api/v1/posts/{postId}")
+    public BaseResponse<String> deletePost(@PathVariable Long postId) {
+        postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
+
+
+
 
     @GetMapping("/api/v1/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {

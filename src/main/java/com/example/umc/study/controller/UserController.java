@@ -9,6 +9,8 @@ import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UserController {
@@ -27,11 +29,22 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
 
-    @DeleteMapping("/api/v1/users/{userId}")
+    /*@DeleteMapping("/api/v1/users/{userId}")
     public void deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
     }
+*/
+    @DeleteMapping("/api/v1/users/{userID}")
+    public BaseResponse<String> deleteUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
 
+    @GetMapping("api/v1/users")
+    public BaseResponse<UserResponseDTO.UserPreviewListDTO> readUsers() {
+        List<User> userList = userService.readUsers();
+        return BaseResponse.onSuccess(UserConverter.toUserPreviewListDTO(userList));
+    }
 
 
 }
