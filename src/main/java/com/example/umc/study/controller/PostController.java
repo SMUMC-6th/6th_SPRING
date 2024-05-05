@@ -1,7 +1,6 @@
 package com.example.umc.study.controller;
 
 import com.example.umc.study.apiPayload.BaseResponse;
-import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.converter.PostConverter;
 import com.example.umc.study.domain.Post;
 import com.example.umc.study.dto.PostRequestDto;
@@ -21,10 +20,8 @@ public class PostController {
     private final PostService postService;
 
     @PostMapping("/posts")
-    public BaseResponse<PostResponseDto.JoinResultDto> createPost(
-            @RequestBody PostRequestDto.JoinDto joinDto
-    ) {
-        Post post = postService.createPost(joinDto);
+    public BaseResponse<PostResponseDto.JoinResultDto> createPost(@PathVariable Long userId, @RequestBody PostRequestDto.CreatePostDto createPostDto) {
+        Post post = postService.createPost(userId, createPostDto);
         return BaseResponse.onSuccess(PostConverter.toJoinResultDto(post));
     }
 
@@ -39,6 +36,18 @@ public class PostController {
     public BaseResponse<PostResponseDto.PostPreviewListDto> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(postList));
+    }
+
+    @GetMapping("users/{userId}/posts")
+    public BaseResponse<PostResponseDto.PostPreviewListDto> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(posts));
+    }
+
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDto.PostPreviewDto> updatePost(@RequestBody PostRequestDto.UpdatePostDTO updatePostDTO, @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO, postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDto(post));
     }
 
     @DeleteMapping("/posts/{postId}")

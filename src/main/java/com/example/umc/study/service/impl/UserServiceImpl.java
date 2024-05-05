@@ -31,14 +31,20 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public User readUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
-        return user;
+        return userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
     }
 
     @Transactional(readOnly = true)
     @Override
     public List<User> readUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User updateUser(UserRequestDto.UpdateUserDTO updateUserDTO, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        user.update(updateUserDTO.getName());
+        return user;
     }
 
     @Override

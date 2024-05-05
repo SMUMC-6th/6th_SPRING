@@ -6,7 +6,7 @@ import com.example.umc.study.dto.ReplyRequestDto;
 import java.util.List;
 
 public interface ReplyService {
-    Reply createReply(ReplyRequestDto.JoinDto replyDTO);
+    Reply createReply(ReplyRequestDto.CreateReplyDto userId, Long postId, Long createReplyDto);
 
     Reply readReply(Long replyId);
 

@@ -4,8 +4,10 @@ import lombok.Getter;
 
 public class ReplyRequestDto {
     @Getter
-    public static class JoinDto {
+    public static class CreateReplyDto {
         private String title;
         private String content;
     }
 }
+
+

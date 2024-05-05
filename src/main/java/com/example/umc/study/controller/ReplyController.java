@@ -1,7 +1,6 @@
 package com.example.umc.study.controller;
 
 import com.example.umc.study.apiPayload.BaseResponse;
-import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.domain.Reply;
 import com.example.umc.study.dto.ReplyRequestDto;
 import com.example.umc.study.dto.ReplyResponseDto;
@@ -21,10 +20,8 @@ public class ReplyController {
     private final ReplyService replyService;
 
     @PostMapping("/replies")
-    public BaseResponse<ReplyResponseDto.JoinResultDto> createPost(
-            @RequestBody ReplyRequestDto.JoinDto joinDto
-    ) {
-        Reply reply = replyService.createReply(joinDto);
+    public BaseResponse<ReplyResponseDto.JoinResultDto> createPost(@RequestBody ReplyRequestDto.CreateReplyDto createReplyDto, Long userId, Long postId) {
+        Reply reply = replyService.createReply(createReplyDto, userId, postId);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDto(reply));
     }
 

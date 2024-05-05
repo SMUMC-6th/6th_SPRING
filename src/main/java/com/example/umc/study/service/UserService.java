@@ -10,5 +10,6 @@ public interface UserService {
     User createUser(UserRequestDto.JoinDto joinDTO);
     User readUser(Long userId);
     List<User> readUsers();
+    User updateUser(UserRequestDto.UpdateUserDTO updateUserDTO, Long userId);
     void deleteUser(Long userId);
 }

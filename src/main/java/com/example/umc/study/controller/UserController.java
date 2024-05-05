@@ -41,6 +41,12 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDto(userList));
     }
 
+    @PatchMapping("/user/{userId}")
+    public BaseResponse<UserResponseDto.UserPreviewDto> updateUser(@RequestBody UserRequestDto.UpdateUserDTO updateUserDTO, @PathVariable Long userId) {
+        User user = userService.updateUser(updateUserDTO, userId);
+        return BaseResponse.onSuccess(UserConverter.toUserPreviewDto(user));
+    }
+
     @DeleteMapping("/user/{userId}")
     public BaseResponse<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
