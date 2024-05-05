@@ -20,12 +20,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplySeriveImpl implements ReplyService {
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    @Transactional
     @Override
     public Reply createReply(Long userId, Long postId, ReplyRequestDTO.CreateReplyDTO createReplyDTO){
         Reply reply = ReplyConverter.toReply(createReplyDTO);
@@ -59,7 +59,6 @@ public class ReplySeriveImpl implements ReplyService {
         return replyRepository.findAllByPost(post);
     }
 
-    @Transactional
     @Override
     public void deleteReply(Long replyId){
         Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));

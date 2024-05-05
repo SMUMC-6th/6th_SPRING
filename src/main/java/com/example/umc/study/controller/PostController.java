@@ -46,7 +46,16 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
+    //게시물 업데이트하기
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO, @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO,postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
+
     // 게시물 삭제하기
     @DeleteMapping("/posts/{postId}")
-    public void deletePost(@PathVariable Long postId){postService.deletePost(postId);}
+    public BaseResponse<String> deletePost(@PathVariable Long postId){postService.deletePost(postId);
+    return BaseResponse.onSuccess("삭제되었습니다.");
+    }
 }

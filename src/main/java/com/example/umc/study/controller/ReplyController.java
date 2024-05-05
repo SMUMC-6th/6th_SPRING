@@ -18,7 +18,7 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("users/{userId}/posts/{postId}/replies ")
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
     public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@PathVariable Long userId, @PathVariable Long postId, @RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         Reply reply = replyService.createReply(userId,postId,createReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
@@ -47,7 +47,10 @@ public class ReplyController {
 
     // 댓글 삭제하기
     @DeleteMapping("replies/{replyId}")
-    public void deleteReply(@PathVariable Long replyId){replyService.deleteReply(replyId);}
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId){
+        replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
 }
 
 
