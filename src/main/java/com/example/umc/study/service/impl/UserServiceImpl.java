@@ -15,11 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-    @Transactional
     @Override
     public User createUser(UserRequestDTO.JoinDTO joinDTO) {
         User user = UserConverter.toUser(joinDTO);
@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()->
