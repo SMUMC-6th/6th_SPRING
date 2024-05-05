@@ -15,6 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;
 
