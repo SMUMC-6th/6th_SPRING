@@ -26,4 +26,13 @@ public class Reply extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    // reply 연관관계 편의 메소드
+    public void setUser(User user){
+        this.user = user;
+    }
+
+    public void setPost(Post post){
+        this.post = post;
+    }
 }

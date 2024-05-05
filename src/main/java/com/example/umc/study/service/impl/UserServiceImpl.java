@@ -10,16 +10,17 @@ import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository; // 생성자 주입
 
     @Override
-    @Transactional
     public User createUser(UserRequestDTO.JoinDTO joinDTO) {
         User user = UserConverter.toUser(joinDTO);
         return userRepository.save(user);
@@ -39,10 +40,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deleteUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         userRepository.delete(user);
+    }
+
+    @Override
+    public User updateUser(UserRequestDTO.UpdateUserDTO updateUserDTO, Long userId) {
+        User user =  userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        user.update(updateUserDTO.getName());
+        return user;
     }
 }
