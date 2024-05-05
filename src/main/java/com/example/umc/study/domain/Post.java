@@ -33,4 +33,10 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void setUser(User user) {this.user = user;}
 }

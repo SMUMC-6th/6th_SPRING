@@ -15,4 +15,5 @@ public interface UserService {
 
     void deleteUser(Long userId);
 
+    User updateUser(UserRequestDTO.UpdateUserDTO updateUserDTO, Long userId);
 }
