@@ -11,6 +11,7 @@ import com.example.umc.study.dto.PostResponseDTO;
 import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.dto.UserResponseDTO;
 import com.example.umc.study.service.PostService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,20 +28,21 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostResultDTO(post));
     }
 
-    @GetMapping("api/v1/posts/{postId}")
+    @GetMapping("/api/v1/posts/{postId}")
     public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
-    @GetMapping("api/v1/posts")
+    @GetMapping("/api/v1/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
-    @DeleteMapping("api/v1/posts/{postId}")
-    public void deletePost(@PathVariable Long postId){
+    @DeleteMapping("/api/v1/posts/{postId}")
+    public BaseResponse<String> deletePost(@PathVariable Long postId){
         postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }

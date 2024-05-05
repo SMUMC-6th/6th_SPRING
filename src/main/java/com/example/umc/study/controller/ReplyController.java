@@ -6,6 +6,7 @@ import com.example.umc.study.converter.ReplyConverter;
 import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.dto.ReplyResponseDTO;
 import com.example.umc.study.service.ReplyService;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -38,5 +39,8 @@ public class ReplyController {
     }
 
     @DeleteMapping("/api/v1/replys/{replyId}")
-    public void deleteReply(@PathVariable Long replyId) { replyService.deleteReply(replyId); }
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
+        replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
 }
