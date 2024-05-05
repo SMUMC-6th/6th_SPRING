@@ -20,13 +20,15 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin
 public class ReplyController {
     private final ReplyService replyService;
-    @PostMapping("/replies")
-    public BaseResponse<ReplyResponseDTO.JoinReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
-        Reply reply = replyService.createReply(joinReplyDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.JoinReplyResultDTO> createReply(@PathVariable Long userId, @PathVariable Long postId, @RequestBody ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
+        Reply reply = replyService.createReply(userId, postId, joinReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyResultDTO(reply));
     }
+
 
     @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
@@ -51,6 +53,12 @@ public class ReplyController {
     @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replyList = replyService.readReplies();
+        return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
+    }
+
+    @GetMapping("/post/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
+        List<Reply> replyList = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
     }
 }

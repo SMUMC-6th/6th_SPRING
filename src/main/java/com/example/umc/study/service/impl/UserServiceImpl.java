@@ -46,4 +46,11 @@ public class UserServiceImpl implements UserService {
     public List<User> readUsers() {
         return userRepository.findAll();
     }
+
+    @Override
+    public User updateUser(UserRequestDTO.UpdateUserDTO updateUserDTO, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        user.update(updateUserDTO.getName());
+        return user;
+    }
 }

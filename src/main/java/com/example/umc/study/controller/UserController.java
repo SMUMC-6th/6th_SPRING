@@ -14,6 +14,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@CrossOrigin
 public class UserController {
     //구현할 메서드 작성
     private final UserService userService;
@@ -45,6 +46,13 @@ public class UserController {
     public BaseResponse<UserResponseDTO.UserPreviewListDTO> readUsers() {
         List<User> userList = userService.readUsers();
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDTO(userList));
+    }
+
+    @PatchMapping("/users/{userId}")
+    public BaseResponse<UserResponseDTO.UserPreviewDTO> updateUser(@RequestBody UserRequestDTO.UpdateUserDTO updateUserDTO,
+                                                                   @PathVariable Long userId) {
+        User user = userService.updateUser(updateUserDTO, userId);
+        return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
 
 
