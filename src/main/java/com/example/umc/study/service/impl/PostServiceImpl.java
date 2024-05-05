@@ -19,11 +19,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    @Transactional
     public Post createPost(PostRequestDTO.JoinPostDTO joinPostDTO) {
         Post post = PostConverter.toPost(joinPostDTO);
         return postRepository.save(post);
@@ -38,7 +38,6 @@ public class PostServiceImpl implements PostService {
         return post;
     }
 
-    @Transactional
     @Override
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));

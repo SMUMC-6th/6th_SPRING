@@ -18,15 +18,16 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
 public class PostController {
     private final PostService postService;
-    @PostMapping("/api/v1/posts")
+    @PostMapping("/posts")
     public BaseResponse<PostResponseDTO.JoinPostResultDTO> createPost(@RequestBody PostRequestDTO.JoinPostDTO joinPostDTO) {
         Post post = postService.createPost(joinPostDTO);
         return BaseResponse.onSuccess(PostConverter.toJoinPostResultDTO(post));
     }
 
-    @GetMapping("/api/v1/posts/{postId}")
+    @GetMapping("/posts/{postId}")
     public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
@@ -39,7 +40,7 @@ public class PostController {
     }
 */
 
-    @DeleteMapping("/api/v1/posts/{postId}")
+    @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
         return BaseResponse.onSuccess("삭제 되었습니다.");
@@ -48,7 +49,7 @@ public class PostController {
 
 
 
-    @GetMapping("/api/v1/posts")
+    @GetMapping("/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toJoinPostPreviewListDTO(postList));
