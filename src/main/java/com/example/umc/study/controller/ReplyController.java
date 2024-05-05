@@ -14,11 +14,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
+
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/api/v1/replies")
+    @PostMapping("/replies")
     public BaseResponse<ReplyResponseDto.JoinResultDto> createPost(
             @RequestBody ReplyRequestDto.JoinDto joinDto
     ) {
@@ -26,14 +28,14 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDto(reply));
     }
 
-    @GetMapping("/api/v1/replies/{replyId}")
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDto.ReplyPreviewDto> readPost(
             @PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDto(reply));
     }
 
-    @GetMapping("/api/v1/replies")
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDto.ReplyPreviewListDto> readPosts() {
         List<Reply> postList = replyService.readReplies();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDto(postList));

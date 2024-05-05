@@ -14,11 +14,13 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
+
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/api/v1/users")
+    @PostMapping("/users")
     public BaseResponse<UserResponseDto.JoinResultDto> createUser(
             @RequestBody UserRequestDto.JoinDto joinDto
     ) {
@@ -26,14 +28,14 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toJoinResultDto(user));
     }
 
-    @GetMapping("/api/v1/users/{userId}")
+    @GetMapping("/users/{userId}")
     public BaseResponse<UserResponseDto.UserPreviewDto> readUser(
             @PathVariable Long userId) {
         User user = userService.readUser(userId);
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDto(user));
     }
 
-    @GetMapping("/api/v1/users")
+    @GetMapping("/users")
     public BaseResponse<UserResponseDto.UserPreviewListDto> readUsers() {
         List<User> userList = userService.readUsers();
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDto(userList));
