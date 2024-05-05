@@ -8,10 +8,11 @@ import com.example.umc.study.dto.ReplyResponseDTO;
 import java.util.List;
 
 public interface ReplyService {
-    Reply createReply(ReplyRequestDTO.ReplyDTO replyDTO);
+    Reply createReply(Long userId, Long postId, ReplyRequestDTO.ReplyDTO replyDTO);
 
     Reply readReply(Long replyId);
     List<Reply> readReply();
 
     void deleteReply(Long replyId);
+    List<Reply> readRepliesByPost(Long postId);
 }
