@@ -15,11 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    @Transactional
     @Override
     public Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         Reply reply = ReplyConverter.toReply(createReplyDTO);
@@ -41,7 +41,6 @@ public class ReplyServiceImpl implements ReplyService {
         return replyRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deleteReply(Long replyId) {
         Reply reply = replyRepository.findById(replyId).orElseThrow(()-> {

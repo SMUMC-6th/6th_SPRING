@@ -15,11 +15,11 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
-    @Transactional
     @Override
     public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO) {
 
@@ -42,7 +42,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> {
