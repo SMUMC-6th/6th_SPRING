@@ -7,7 +7,7 @@ import com.example.umc.study.dto.ReplyResponseDto;
 import java.util.List;
 
 public class ReplyConverter {
-    public static Reply toReply(ReplyRequestDto.JoinDto joinDto) {
+    public static Reply toReply(ReplyRequestDto.CreateReplyDto joinDto) {
         return Reply.builder()
                 .title(joinDto.getTitle())
                 .content(joinDto.getContent())

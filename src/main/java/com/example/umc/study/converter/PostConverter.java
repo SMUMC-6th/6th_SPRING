@@ -7,10 +7,10 @@ import com.example.umc.study.dto.PostResponseDto;
 import java.util.List;
 
 public class PostConverter {
-    public static Post toPost(PostRequestDto.JoinDto joinDto) {
+    public static Post toPost(PostRequestDto.CreatePostDto createPostDto) {
         return Post.builder()
-                .title(joinDto.getTitle())
-                .content(joinDto.getContent())
+                .title(createPostDto.getTitle())
+                .content(createPostDto.getContent())
                 .build();
     }
 

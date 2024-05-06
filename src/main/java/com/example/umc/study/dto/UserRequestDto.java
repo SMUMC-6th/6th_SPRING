@@ -7,4 +7,9 @@ public class UserRequestDto {
     public static class JoinDto {
         private String name;
     }
+
+    @Getter
+    public static class UpdateUserDTO {
+        private String name;
+    }
 }

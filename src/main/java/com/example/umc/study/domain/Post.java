@@ -11,11 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +32,7 @@ public class Post extends BaseEntity {
 
     private String content;
 
+    @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -46,4 +43,12 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
 
+    public void updatePost(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }
