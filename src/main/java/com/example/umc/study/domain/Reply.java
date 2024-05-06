@@ -10,7 +10,6 @@ import lombok.*;
 @Builder
 @Getter
 public class Reply extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reply_id")
@@ -21,15 +20,18 @@ public class Reply extends BaseEntity {
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Post post;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
-    //setter 어노테이션을 넣는건 좋지않기에 따로 빼줌
-    public void setUser(User user) { this.user = user; }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
-    public void setPost(Post post) { this.post = post; }
+    public void setUser(User setUser) {
+        user = setUser;
+    }
+
+    public void setPost(Post setPost) {
+        post = setPost;
+    }
 }

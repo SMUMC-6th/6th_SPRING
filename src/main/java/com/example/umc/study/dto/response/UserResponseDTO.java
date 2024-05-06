@@ -1,4 +1,4 @@
-package com.example.umc.study.dto;
+package com.example.umc.study.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,14 +8,13 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class PostResponseDTO {
-
+public class UserResponseDTO {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class CreatePostResultDTO{
-        private Long postId;
+    public static class JoinResultDTO{
+        private Long userId;
         private LocalDateTime createAt;
     }
 
@@ -23,10 +22,10 @@ public class PostResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class PostPreviewDTO {
-        private Long postId;
-        private String title;
-        private String content;
+    public static class UserPreviewDTO {
+        private Long userId;
+        private String name;
+        private Long categoryId;
         private LocalDateTime updateAt;
         private LocalDateTime createAt;
     }
@@ -35,7 +34,11 @@ public class PostResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class PostPreviewListDTO {
-        List<PostPreviewDTO> postPreviewDTOList;
+    public static class UserPreviewListDTO {
+       List<UserPreviewDTO> userPreivewDTOList;
     }
+
+
+
 }
+

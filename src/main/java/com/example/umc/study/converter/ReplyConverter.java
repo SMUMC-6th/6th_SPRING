@@ -8,18 +8,19 @@ import java.util.List;
 
 public class ReplyConverter {
 
-    public static Reply toReply(ReplyRequestDTO.AddDTO addDTO) {
+    public static Reply toReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         return Reply.builder()
-                .title(addDTO.getTitle())
-                .content(addDTO.getContent())
+                .title(createReplyDTO.getTitle())
+                .content(createReplyDTO.getContent())
                 .build();
     }
 
-    public static ReplyResponseDTO.AddResultDTO toAddResultDTO(Reply reply) {
-        return ReplyResponseDTO.AddResultDTO.builder()
+    public static ReplyResponseDTO.CreateReplyResultDTO toCreateReplyResultDTO(Reply reply) {
+        return ReplyResponseDTO.CreateReplyResultDTO.builder()
                 .replyId(reply.getId())
                 .createAt(reply.getCreatedAt())
                 .build();
+
     }
 
     public static ReplyResponseDTO.ReplyPreviewDTO toReplyPreviewDTO(Reply reply) {
@@ -37,7 +38,8 @@ public class ReplyConverter {
                 .map(ReplyConverter::toReplyPreviewDTO)
                 .toList();
 
-        return ReplyResponseDTO.ReplyPreviewListDTO.builder()
+        return ReplyResponseDTO.ReplyPreviewListDTO
+                .builder()
                 .replyPreviewDTOList(replyPreviewDTOList)
                 .build();
     }

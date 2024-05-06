@@ -24,52 +24,47 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-
-    //게시글 작성
     @Override
-    public Post createPost(PostRequestDTO.UploadDTO uploadDTO, Long userId) {
-        Post post = PostConverter.toPost(uploadDTO);
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
-        post.setUser(user);
-        postRepository.save(post);
+    public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId) {
+
+        Post post = PostConverter.toPost(createPostDTO);
+        return postRepository.save(post);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public Post readPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> {
+            throw new PostHandler(ErrorStatus._NOT_FOUND_POST);
+        });
         return post;
     }
 
-    //게시글 조회
-    @Transactional(readOnly = true)
-    @Override
-    //readOnly는 데이터베이스를 건들지 않는 것으로 직접적으로 데이터를 변화시켜야하는 create, update, delete에는 쓰면 안되는 옵션
-    public Post readPost(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
-    }
-
-    //게시글 전체 조회
     @Transactional(readOnly = true)
     @Override
     public List<Post> readPosts() {
         return postRepository.findAll();
     }
 
-    //게시글 삭제
     @Override
     public void deletePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() ->new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(()-> {
+            throw new PostHandler(ErrorStatus._NOT_FOUND_POST);
+        });
         postRepository.delete(post);
     }
-
-    //게시글 업데이트
     @Override
-    public Post updatePost(PostRequestDTO.updatePostDTO updatePostDTO, Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+    public Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId) {
+        Post post = readPost(postId);
         post.update(updatePostDTO.getTitle(), updatePostDTO.getContent());
         return post;
     }
 
-    //user로 모든 게시글 찾기
     @Override
     @Transactional(readOnly = true)
-    public List<Post> readPostByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() ->new UserHandler(ErrorStatus._NOT_FOUND_USER));
+    public List<Post> readPostsByUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_POST));
         return postRepository.findAllByUser(user);
     }
 }

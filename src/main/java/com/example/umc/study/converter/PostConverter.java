@@ -8,15 +8,15 @@ import java.util.List;
 
 public class PostConverter {
 
-    public static Post toPost(PostRequestDTO.UploadDTO uploadDTO) {
+    public static Post toPost(PostRequestDTO.CreatePostDTO createPostDTO) {
         return Post.builder()
-                .title(uploadDTO.getTitle())
-                .content(uploadDTO.getContent())
+                .title(createPostDTO.getTitle())
+                .content(createPostDTO.getContent())
                 .build();
     }
 
-    public static PostResponseDTO.UploadResultDTO toUploadResultDTO(Post post) {
-        return PostResponseDTO.UploadResultDTO.builder()
+    public static PostResponseDTO.CreatePostResultDTO toCreatePostResultDTO(Post post) {
+        return  PostResponseDTO.CreatePostResultDTO.builder()
                 .postId(post.getId())
                 .createAt(post.getCreatedAt())
                 .build();
@@ -27,8 +27,8 @@ public class PostConverter {
                 .postId(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .updateAt(post.getUpdatedAt())
                 .createAt(post.getCreatedAt())
+                .updateAt(post.getUpdatedAt())
                 .build();
     }
 
@@ -38,8 +38,7 @@ public class PostConverter {
                 .toList();
 
         return PostResponseDTO.PostPreviewListDTO.builder()
-                .postPreviewList(postPreviewDTOList)
+                .postPreviewDTOList(postPreviewDTOList)
                 .build();
     }
-
 }

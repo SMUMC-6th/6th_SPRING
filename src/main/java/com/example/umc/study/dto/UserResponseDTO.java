@@ -1,6 +1,5 @@
 package com.example.umc.study.dto;
 
-import com.example.umc.study.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +14,7 @@ public class UserResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class JoinResultDTO {
+    public static class JoinResultDTO{
 
         private Long userId;
 
@@ -26,20 +25,15 @@ public class UserResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class UserPreviewDTO {
-        private Long userId;
-        private String name;
-        private LocalDateTime updateAt;
-        private LocalDateTime createAt;
-    }
+    public static class UserPreviewDTO{
 
-    public static UserResponseDTO.UserPreviewDTO toUserPreviewDTO(User user) {
-        return UserPreviewDTO.builder()
-                .userId(user.getId())
-                .name(user.getName())
-                .updateAt(user.getUpdatedAt())
-                .createAt(user.getCreatedAt())
-                .build();
+        private Long userId;
+
+        private String name;
+
+        private LocalDateTime updateAt;
+
+        private LocalDateTime createAt;
     }
 
     @Getter
@@ -47,7 +41,6 @@ public class UserResponseDTO {
     @NoArgsConstructor
     @Builder
     public static class UserPreviewListDTO {
-        List<UserPreviewDTO> UserPreviewDTOList;
+        List<UserPreviewDTO> userPreviewDTOList;
     }
-
 }

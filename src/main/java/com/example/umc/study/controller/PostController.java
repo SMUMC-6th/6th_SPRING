@@ -13,53 +13,47 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
 
-    //게시글 등록
     @PostMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.UploadResultDTO> createPost(@RequestBody PostRequestDTO.UploadDTO uploadDTO,
-                                                                    @PathVariable Long userId) {
-        Post post = postService.createPost(uploadDTO, userId);
-        return BaseResponse.onSuccess(PostConverter.toUploadResultDTO(post));
+    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO,
+                                                                        @PathVariable Long userId) {
+        Post post = postService.createPost(createPostDTO, userId);
+        return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
     }
 
-    //게시글 조회
     @GetMapping("/posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId){
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> readUser(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
-    //게시글 전체 조회
     @GetMapping("/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
-    //게시글 삭제
     @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
-        return BaseResponse.onSuccess("삭제 되었습니다");
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 
-    //게시글 title,content 수정
-    @PatchMapping("posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.updatePostDTO updatePostDTO,
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO,
                                                                    @PathVariable Long postId) {
         Post post = postService.updatePost(updatePostDTO, postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
-    //user로 게시글 전체 조회
     @GetMapping("/users/{userId}/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
-        List<Post> posts = postService.readPostByUser(userId);
+        List<Post> posts = postService.readPostsByUser(userId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
     }
-
 }

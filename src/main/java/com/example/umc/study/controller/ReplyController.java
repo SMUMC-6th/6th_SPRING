@@ -13,21 +13,20 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
+@CrossOrigin("*")
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    //답글 등록
-    @PostMapping("/users/{userId}/posts/{postId}/replies/")
-    public BaseResponse<ReplyResponseDTO.AddResultDTO> createReply(@RequestBody ReplyRequestDTO.AddDTO addDTO,
-                                                                   @PathVariable Long userId,
-                                                                   @PathVariable Long postId) {
-        Reply reply = replyService.createReply(addDTO, userId, postId);
-        return BaseResponse.onSuccess(ReplyConverter.toAddResultDTO(reply));
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO,
+                                                                           @PathVariable Long userId,
+                                                                           @PathVariable Long postId) {
+        Reply reply = replyService.createReply(createReplyDTO, userId, postId);
+        return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
     }
 
-    //답글 조회
     @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
@@ -47,8 +46,8 @@ public class ReplyController {
     }
 
     @GetMapping("/posts/{postId}/replies")
-    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplyByPost(@PathVariable Long postId) {
-        List<Reply> replies = replyService.readReplyByPost(postId);
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 }

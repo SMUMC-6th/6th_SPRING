@@ -2,7 +2,6 @@ package com.example.umc.study.apiPayload.code;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
 @Getter
@@ -14,4 +13,3 @@ public class ReasonDTO {
     private final String code;
     private final String message;
 }
-
