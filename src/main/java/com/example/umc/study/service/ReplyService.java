@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReplyService {
 
-    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO);
+    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO, Long userId, Long postId);
 
     Reply readReply(Long replyId);
 
