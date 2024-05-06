@@ -42,9 +42,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(()->
-                new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        User user = readUser(userId);
         userRepository.delete(user);
     }
+
+    @Override
+    public User updateUser(UserRequestDTO.UpdateUserDTO updateUserDTO, Long userId) {
+        User user = readUser(userId);
+        user.update(updateUserDTO.getName());
+        return user;
+    }
+
 
 }
