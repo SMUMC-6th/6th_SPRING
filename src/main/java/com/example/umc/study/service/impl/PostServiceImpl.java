@@ -21,7 +21,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO) {
+    public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId) {
 
         Post post = PostConverter.toPost(createPostDTO);
         return postRepository.save(post);

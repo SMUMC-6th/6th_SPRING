@@ -18,9 +18,10 @@ public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/posts")
-    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createUser(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
-        Post post = postService.createPost(createPostDTO);
+    @PostMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO,
+                                                                        @PathVariable Long userId) {
+        Post post = postService.createPost(createPostDTO, userId);
         return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
     }
 

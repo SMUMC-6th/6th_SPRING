@@ -38,4 +38,7 @@ public class Post extends BaseEntity {
         title = postTitle;
         content = postContent;
     }
+    public void setUser(User users) {
+        user = users;
+    }
 }

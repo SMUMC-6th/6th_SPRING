@@ -6,7 +6,7 @@ import com.example.umc.study.dto.PostRequestDTO;
 import java.util.List;
 
 public interface PostService {
-    Post createPost(PostRequestDTO.CreatePostDTO createPostDTO);
+    Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId);
 
     Post readPost(Long postId);
 
