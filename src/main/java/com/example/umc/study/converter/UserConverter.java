@@ -1,13 +1,12 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.User;
-import com.example.umc.study.dto.request.UserRequestDTO;
-import com.example.umc.study.dto.response.UserResponseDTO;
+import com.example.umc.study.dto.UserRequestDTO;
+import com.example.umc.study.dto.UserResponseDTO;
 
 import java.util.List;
 
 public class UserConverter {
-
     public static User toUser(UserRequestDTO.JoinDTO joinDTO) {
         return User.builder()
                 .name(joinDTO.getName())
@@ -32,11 +31,10 @@ public class UserConverter {
 
     public static UserResponseDTO.UserPreviewListDTO toUserPreviewListDTO(List<User> userList) {
         List<UserResponseDTO.UserPreviewDTO> userPreviewDTOList = userList.stream()
-                                                                    .map(UserConverter::toUserPreviewDTO)
-                                                                    .toList();
-
+                .map(UserConverter::toUserPreviewDTO)
+                .toList();
         return UserResponseDTO.UserPreviewListDTO.builder()
-                .userPreviewDTOList(userPreviewDTOList)
+                .userRreviewDTOList(userPreviewDTOList)
                 .build();
     }
 }

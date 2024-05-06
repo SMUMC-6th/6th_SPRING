@@ -1,6 +1,5 @@
 package com.example.umc.study.apiPayload.code.status;
 
-
 import com.example.umc.study.apiPayload.code.BaseCode;
 import com.example.umc.study.apiPayload.code.ReasonDTO;
 import lombok.AllArgsConstructor;

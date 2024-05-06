@@ -1,22 +1,18 @@
 package com.example.umc.study.controller;
 
 import com.example.umc.study.apiPayload.BaseResponse;
-import com.example.umc.study.converter.ReplyConverter;
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.request.ReplyRequestDTO;
-import com.example.umc.study.dto.response.ReplyResponseDTO;
+import com.example.umc.study.converter.ReplyConverter;
+import com.example.umc.study.dto.ReplyRequestDTO;
+import com.example.umc.study.dto.ReplyResponseDTO;
 import com.example.umc.study.service.ReplyService;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
 
 @RestController
 @RequiredArgsConstructor
@@ -25,10 +21,10 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/replies/{replyId}")
-    public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
-        Reply reply = replyService.createReply(createReplyDTO);
-        return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyResultDTO> createReply(@PathVariable Long userId, @PathVariable Long postId, @RequestBody ReplyRequestDTO.ReplyDTO replyDTO) {
+        Reply reply = replyService.createReply(userId, postId, replyDTO);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyResultDTO(reply));
     }
 
     @GetMapping("/replies/{replyId}")
@@ -38,20 +34,19 @@ public class ReplyController {
     }
 
     @GetMapping("/replies")
-    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
-        List<Reply> replies = replyService.readReplies();
-        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReply() {
+        List<Reply> replyList = replyService.readReply();
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
 
     @DeleteMapping("/replies/{replyId}")
     public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
-        return BaseResponse.onSuccess("삭제에 성공하였습니다.");
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
-
     @GetMapping("/posts/{postId}/replies")
-    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> findAllByPost(@PathVariable Long postId) {
-        List<Reply> replies = replyService.findAllByPost(postId);
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplyByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 }
