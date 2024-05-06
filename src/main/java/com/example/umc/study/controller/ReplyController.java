@@ -19,28 +19,46 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
+@CrossOrigin
 public class ReplyController {
     private final ReplyService replyService;
-    @PostMapping("/api/v1/replies")
-    public BaseResponse<ReplyResponseDTO.JoinReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
-        Reply reply = replyService.createReply(joinReplyDTO);
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.JoinReplyResultDTO> createReply(@PathVariable Long userId, @PathVariable Long postId, @RequestBody ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
+        Reply reply = replyService.createReply(userId, postId, joinReplyDTO);
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyResultDTO(reply));
     }
 
-    @GetMapping("/api/v1/replies/{replyId}")
+
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
+/*
     @DeleteMapping("/api/v1/replies/{replyId}")
     public void deleteReply(@PathVariable Long replyId) {
         replyService.deleteReply(replyId);
     }
+*/
 
-    @GetMapping("/api/v1/replies")
+    @DeleteMapping("/replies/{replyId}")
+    public BaseResponse<String> deleteReply(@PathVariable Long replyId) {
+        replyService.deleteReply(replyId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
+    }
+
+
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplies() {
         List<Reply> replyList = replyService.readReplies();
+        return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
+    }
+
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
+        List<Reply> replyList = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
     }
 }

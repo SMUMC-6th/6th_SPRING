@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class UserResponseDTO {
     @Getter //필드에 접근
@@ -30,6 +31,7 @@ public class UserResponseDTO {
         private LocalDateTime createAt;
     }
 
+
     public static UserResponseDTO.UserPreviewDTO toUserPreviewDTO(User user) {
         return UserPreviewDTO.builder()
                 .userId(user.getId())
@@ -37,5 +39,13 @@ public class UserResponseDTO {
                 .updateAt(user.getUpdatedAt())
                 .createAt(user.getCreatedAt())
                 .build();
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class UserPreviewListDTO {
+        List<UserResponseDTO.UserPreviewDTO> userPreviewDTOList;
     }
 }

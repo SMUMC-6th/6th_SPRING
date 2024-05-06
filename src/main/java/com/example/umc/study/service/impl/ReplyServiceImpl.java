@@ -3,6 +3,7 @@ package com.example.umc.study.service.impl;
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.PostHandler;
 import com.example.umc.study.apiPayload.exception.handler.ReplyHandler;
+import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.converter.ReplyConverter;
 import com.example.umc.study.converter.UserConverter;
 import com.example.umc.study.domain.Post;
@@ -10,6 +11,7 @@ import com.example.umc.study.domain.Reply;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.dto.UserRequestDTO;
+import com.example.umc.study.repository.PostRepository;
 import com.example.umc.study.repository.ReplyRepository;
 import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.ReplyService;
@@ -21,14 +23,21 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReplyServiceImpl implements ReplyService {
     private final ReplyRepository replyRepository;
+    private final UserRepository userRepository;
+    private final PostRepository postRepository;
 
     @Override
-    @Transactional
-    public Reply createReply(ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
+    public Reply createReply(Long userId, Long postId, ReplyRequestDTO.JoinReplyDTO joinReplyDTO) {
         Reply reply = ReplyConverter.toReply(joinReplyDTO);
-        return replyRepository.save(reply);
+        User user = userRepository.findById(userId).orElseThrow(()->new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        reply.setUser(user);
+        Post post = postRepository.findById(postId).orElseThrow(()->new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        reply.setPost(post);
+        replyRepository.save(reply);
+        return reply;
     }
 
     @Transactional(readOnly = true)
@@ -40,7 +49,6 @@ public class ReplyServiceImpl implements ReplyService {
         return reply;
     }
 
-    @Transactional
     @Override
     public void deleteReply(Long replyId) {
         Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
@@ -51,6 +59,13 @@ public class ReplyServiceImpl implements ReplyService {
     @Override
     public List<Reply> readReplies() {
         return replyRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Reply> readRepliesByPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()->new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        return replyRepository.findAllByPost(post);
     }
 
 }
