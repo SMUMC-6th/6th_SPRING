@@ -41,4 +41,11 @@ public class PostController {
         postService.deletePost(postId);
         return BaseResponse.onSuccess("삭제 되었습니다.");
     }
+
+    @PatchMapping("/posts/{postId}")
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO,
+                                                                   @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO, postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
 }
