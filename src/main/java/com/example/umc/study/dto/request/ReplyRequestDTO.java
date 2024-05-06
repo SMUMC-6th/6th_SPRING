@@ -1,10 +1,11 @@
-package com.example.umc.study.dto;
+package com.example.umc.study.dto.request;
 
 import lombok.Getter;
 
 public class ReplyRequestDTO {
+
     @Getter
-    public static class ReplyDTO {
+    public static class CreateReplyDTO {
         private String title;
         private String content;
     }
