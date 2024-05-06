@@ -5,26 +5,24 @@ import com.example.umc.study.domain.mapping.PostCategory;
 import jakarta.persistence.*;
 import lombok.*;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access =AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
 public class Post extends BaseEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
     private Long id;
-    private String title;
-    private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    private String title;
+
+    private String content;
 
     @OneToMany(mappedBy = "post")
     private List<Reply> replies = new ArrayList<>();
@@ -32,12 +30,15 @@ public class Post extends BaseEntity {
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
 
-    public void setUser(User user) {
-        this.user = user;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
+    public void update(String postTitle, String postContent) {
+        title = postTitle;
+        content = postContent;
+    }
+    public void setUser(User users) {
+        user = users;
     }
 }

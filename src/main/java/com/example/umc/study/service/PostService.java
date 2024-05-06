@@ -1,21 +1,20 @@
 package com.example.umc.study.service;
+
 import com.example.umc.study.domain.Post;
-import com.example.umc.study.domain.User;
-import com.example.umc.study.dto.request.PostRequestDTO;
-import com.example.umc.study.dto.request.UserRequestDTO;
+import com.example.umc.study.dto.PostRequestDTO;
 
 import java.util.List;
 
 public interface PostService {
-
-    Post createPost(Long userId,PostRequestDTO.CreatePostDTO createPostDTO);
+    Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId);
 
     Post readPost(Long postId);
-    List<Post> readPostsByUserId(Long userId);
 
     List<Post> readPosts();
 
+    void deletePost(Long postId);
+
     Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId);
 
-    void deletePost(Long postId);
+    List<Post> readPostsByUser(Long userId);
 }

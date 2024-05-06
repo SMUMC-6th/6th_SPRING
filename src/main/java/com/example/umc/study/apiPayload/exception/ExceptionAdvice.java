@@ -1,6 +1,5 @@
 package com.example.umc.study.apiPayload.exception;
 
-
 import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.apiPayload.code.ErrorReasonDTO;
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
@@ -25,8 +24,9 @@ import java.util.Optional;
 
 @Slf4j
 @RestControllerAdvice(annotations = {RestController.class})
+public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
-public class ExceptionAdvice extends ResponseEntityExceptionHandler{
+
     @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<Object> validation(ConstraintViolationException e, WebRequest request) {
         String errorMessage = e.getConstraintViolations().stream()
@@ -36,12 +36,15 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
 
         return handleExceptionInternalConstraint(e, ErrorStatus.valueOf(errorMessage), HttpHeaders.EMPTY,request);
     }
+
+
     @Override
     public ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException e,
             HttpHeaders headers,
             HttpStatusCode status,
-            WebRequest request){
+            WebRequest request) {
+
         Map<String, String> errors = new LinkedHashMap<>();
 
         e.getBindingResult().getFieldErrors().stream()
@@ -65,12 +68,14 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
     public ResponseEntity<Object> exception(Exception e, WebRequest request) {
         e.printStackTrace();
 
-        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(),request, e.getMessage());}
+        return handleExceptionInternalFalse(e, ErrorStatus._INTERNAL_SERVER_ERROR, HttpHeaders.EMPTY, ErrorStatus._INTERNAL_SERVER_ERROR.getHttpStatus(),request, e.getMessage());
+    }
 
     @ExceptionHandler(value = GeneralException.class)
     public ResponseEntity onThrowException(GeneralException generalException, HttpServletRequest request) {
-    ErrorReasonDTO errorReasonHttpStatus = generalException.getErrorReasonHttpStatus();
-    return handleExceptionInternal(generalException,errorReasonHttpStatus,null,request);}
+        ErrorReasonDTO errorReasonHttpStatus = generalException.getErrorReasonHttpStatus();
+        return handleExceptionInternal(generalException,errorReasonHttpStatus,null,request);
+    }
 
     private ResponseEntity<Object> handleExceptionInternal(Exception e, ErrorReasonDTO reason,
                                                            HttpHeaders headers, HttpServletRequest request) {
@@ -87,6 +92,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
                 webRequest
         );
     }
+
     private ResponseEntity<Object> handleExceptionInternalFalse(Exception e, ErrorStatus errorCommonStatus,
                                                                 HttpHeaders headers, HttpStatus status, WebRequest request, String errorPoint) {
         BaseResponse<Object> body = BaseResponse.onFailure(errorCommonStatus.getCode(),errorCommonStatus.getMessage(),errorPoint);
@@ -98,6 +104,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
                 request
         );
     }
+
     private ResponseEntity<Object> handleExceptionInternalArgs(Exception e, HttpHeaders headers, ErrorStatus errorCommonStatus,
                                                                WebRequest request, Map<String, String> errorArgs) {
         BaseResponse<Object> body = BaseResponse.onFailure(errorCommonStatus.getCode(),errorCommonStatus.getMessage(),errorArgs);
@@ -109,6 +116,7 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
                 request
         );
     }
+
     private ResponseEntity<Object> handleExceptionInternalConstraint(Exception e, ErrorStatus errorCommonStatus,
                                                                      HttpHeaders headers, WebRequest request) {
         BaseResponse<Object> body = BaseResponse.onFailure(errorCommonStatus.getCode(), errorCommonStatus.getMessage(), null);
@@ -120,6 +128,4 @@ public class ExceptionAdvice extends ResponseEntityExceptionHandler{
                 request
         );
     }
-
 }
-

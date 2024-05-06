@@ -1,14 +1,14 @@
 package com.example.umc.study.domain.mapping;
 
-import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.Category;
+import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.common.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access =AccessLevel.PROTECTED)
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Builder
 @Getter
 public class PostCategory extends BaseEntity {
@@ -24,5 +24,4 @@ public class PostCategory extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-
 }

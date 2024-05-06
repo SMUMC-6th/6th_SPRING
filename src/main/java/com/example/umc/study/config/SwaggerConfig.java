@@ -1,5 +1,11 @@
 package com.example.umc.study.config;
 
+//import io.swagger.v3.oas.annotations.info.Info;
+//import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+//import io.swagger.v3.oas.annotations.security.SecurityScheme;
+//import io.swagger.v3.oas.annotations.servers.Server;
+//import io.swagger.v3.oas.models.Components;
+//import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
@@ -9,6 +15,7 @@ import io.swagger.v3.oas.models.servers.Server;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+// 참고로 jwt까지 가능하게 한 설정입니다.
 @Configuration
 public class SwaggerConfig {
 
