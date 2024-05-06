@@ -16,8 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 @Transactional
 public class PostServiceImpl implements PostService {
 
@@ -25,35 +25,37 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
 
     @Override
-    public Post createPost(Long userId, PostRequestDTO.JoinDTO joinDTO) {
+    public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId) {
 
-        Post post = PostConverter.toPost(joinDTO);
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
-        post.setUser(user);
+        Post post = PostConverter.toPost(createPostDTO);
         return postRepository.save(post);
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public Post readPost(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+    @Override
+    public Post readPost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> {
+            throw new PostHandler(ErrorStatus._NOT_FOUND_POST);
+        });
+        return post;
     }
 
-    @Override
     @Transactional(readOnly = true)
+    @Override
     public List<Post> readPosts() {
         return postRepository.findAll();
     }
 
     @Override
-    public void deletePost(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+    public void deletePost(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(()-> {
+            throw new PostHandler(ErrorStatus._NOT_FOUND_POST);
+        });
         postRepository.delete(post);
     }
-
     @Override
-    public Post updatePost(Long id, PostRequestDTO.UpdatePostDTO updatePostDTO) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+    public Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId) {
+        Post post = readPost(postId);
         post.update(updatePostDTO.getTitle(), updatePostDTO.getContent());
         return post;
     }
@@ -61,7 +63,8 @@ public class PostServiceImpl implements PostService {
     @Override
     @Transactional(readOnly = true)
     public List<Post> readPostsByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_POST));
         return postRepository.findAllByUser(user);
     }
 }

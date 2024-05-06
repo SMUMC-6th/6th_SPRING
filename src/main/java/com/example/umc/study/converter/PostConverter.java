@@ -8,17 +8,17 @@ import java.util.List;
 
 public class PostConverter {
 
-    public static Post toPost(PostRequestDTO.JoinDTO joinDTO) {
+    public static Post toPost(PostRequestDTO.CreatePostDTO createPostDTO) {
         return Post.builder()
-                .title(joinDTO.getTitle())
-                .content(joinDTO.getContent())
+                .title(createPostDTO.getTitle())
+                .content(createPostDTO.getContent())
                 .build();
     }
 
-    public static PostResponseDTO.JoinResultDTO toJoinResultDTO(Post post) {
-        return PostResponseDTO.JoinResultDTO.builder()
+    public static PostResponseDTO.CreatePostResultDTO toCreatePostResultDTO(Post post) {
+        return  PostResponseDTO.CreatePostResultDTO.builder()
                 .postId(post.getId())
-                .createdAt(post.getCreatedAt())
+                .createAt(post.getCreatedAt())
                 .build();
     }
 
@@ -27,17 +27,18 @@ public class PostConverter {
                 .postId(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
-                .createdAt(post.getCreatedAt())
-                .updatedAt(post.getUpdatedAt())
+                .createAt(post.getCreatedAt())
+                .updateAt(post.getUpdatedAt())
                 .build();
     }
 
     public static PostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<Post> postList) {
+        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList = postList.stream()
+                .map(PostConverter::toPostPreviewDTO)
+                .toList();
+
         return PostResponseDTO.PostPreviewListDTO.builder()
-                .postPreviewDTOList(
-                        postList.stream()
-                                .map(PostConverter::toPostPreviewDTO)
-                                .toList()
-                ).build();
+                .postPreviewDTOList(postPreviewDTOList)
+                .build();
     }
 }

@@ -1,16 +1,18 @@
 package com.example.umc.study.controller;
 
-import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.service.TestService;
-import lombok.RequiredArgsConstructor;
+import com.example.umc.study.apiPayload.BaseResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequiredArgsConstructor
+@RestController // RestController는 ResponseBody와 controller를 합친 것이라고 보면 됨.
 public class TestController {
 
     private final TestService testService;
+
+    public TestController(TestService testService) {
+        this.testService = testService;
+    }
 
     @GetMapping("/")
     public BaseResponse<String> test() {

@@ -6,13 +6,14 @@ import com.example.umc.study.dto.ReplyRequestDTO;
 import java.util.List;
 
 public interface ReplyService {
-    Reply createReply(Long userId, Long postId, ReplyRequestDTO.JoinDTO joinDTO);
 
-    Reply readReply(Long id);
+    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO, Long userId, Long postId);
+
+    Reply readReply(Long replyId);
 
     List<Reply> readReplies();
 
-    void deleteReply(Long id);
+    void deleteReply(Long replyId);
 
     List<Reply> readRepliesByPost(Long postId);
 }

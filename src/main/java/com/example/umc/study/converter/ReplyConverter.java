@@ -8,18 +8,19 @@ import java.util.List;
 
 public class ReplyConverter {
 
-    public static Reply toReply(ReplyRequestDTO.JoinDTO joinDTO) {
+    public static Reply toReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         return Reply.builder()
-                .title(joinDTO.getTitle())
-                .content(joinDTO.getContent())
+                .title(createReplyDTO.getTitle())
+                .content(createReplyDTO.getContent())
                 .build();
     }
 
-    public static ReplyResponseDTO.JoinResultDTO toJoinResultDTO(Reply reply) {
-        return ReplyResponseDTO.JoinResultDTO.builder()
+    public static ReplyResponseDTO.CreateReplyResultDTO toCreateReplyResultDTO(Reply reply) {
+        return ReplyResponseDTO.CreateReplyResultDTO.builder()
                 .replyId(reply.getId())
-                .createdAt(reply.getCreatedAt())
+                .createAt(reply.getCreatedAt())
                 .build();
+
     }
 
     public static ReplyResponseDTO.ReplyPreviewDTO toReplyPreviewDTO(Reply reply) {
@@ -27,16 +28,19 @@ public class ReplyConverter {
                 .replyId(reply.getId())
                 .title(reply.getTitle())
                 .content(reply.getContent())
-                .createdAt(reply.getCreatedAt())
-                .updatedAt(reply.getUpdatedAt())
+                .updateAt(reply.getUpdatedAt())
+                .createAt(reply.getCreatedAt())
                 .build();
     }
 
     public static ReplyResponseDTO.ReplyPreviewListDTO toReplyPreviewListDTO(List<Reply> replyList) {
-        return ReplyResponseDTO.ReplyPreviewListDTO.builder()
-                .replyPreviewDTOList(replyList.stream()
-                        .map(ReplyConverter::toReplyPreviewDTO)
-                        .toList()
-                ).build();
+        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList = replyList.stream()
+                .map(ReplyConverter::toReplyPreviewDTO)
+                .toList();
+
+        return ReplyResponseDTO.ReplyPreviewListDTO
+                .builder()
+                .replyPreviewDTOList(replyPreviewDTOList)
+                .build();
     }
 }

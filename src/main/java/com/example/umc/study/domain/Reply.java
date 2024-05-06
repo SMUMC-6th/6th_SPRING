@@ -10,7 +10,6 @@ import lombok.*;
 @Builder
 @Getter
 public class Reply extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "reply_id")
@@ -28,11 +27,11 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUser(User setUser) {
+        user = setUser;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(Post setPost) {
+        post = setPost;
     }
 }

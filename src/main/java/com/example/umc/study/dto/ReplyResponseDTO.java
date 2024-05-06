@@ -14,9 +14,9 @@ public class ReplyResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class JoinResultDTO {
+    public static class CreateReplyResultDTO {
         private Long replyId;
-        private LocalDateTime createdAt;
+        private LocalDateTime createAt;
     }
 
     @Getter
@@ -27,8 +27,8 @@ public class ReplyResponseDTO {
         private Long replyId;
         private String title;
         private String content;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+        private LocalDateTime updateAt;
+        private LocalDateTime createAt;
     }
 
     @Getter
@@ -36,6 +36,6 @@ public class ReplyResponseDTO {
     @NoArgsConstructor
     @Builder
     public static class ReplyPreviewListDTO {
-        private List<ReplyPreviewDTO> replyPreviewDTOList;
+        List<ReplyPreviewDTO> replyPreviewDTOList;
     }
 }

@@ -14,20 +14,26 @@ public class UserResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class JoinResultDTO {
+    public static class JoinResultDTO{
+
         private Long userId;
-        private LocalDateTime createdAt;
+
+        private LocalDateTime createAt;
     }
 
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class UserPreviewDTO {
+    public static class UserPreviewDTO{
+
         private Long userId;
+
         private String name;
-        private LocalDateTime createdAt;
-        private LocalDateTime updatedAt;
+
+        private LocalDateTime updateAt;
+
+        private LocalDateTime createAt;
     }
 
     @Getter
@@ -35,6 +41,6 @@ public class UserResponseDTO {
     @NoArgsConstructor
     @Builder
     public static class UserPreviewListDTO {
-        private List<UserPreviewDTO> userPreviewDTOList;
+        List<UserPreviewDTO> userPreviewDTOList;
     }
 }

@@ -6,15 +6,15 @@ import com.example.umc.study.dto.PostRequestDTO;
 import java.util.List;
 
 public interface PostService {
-    Post createPost(Long userId, PostRequestDTO.JoinDTO joinDTO);
+    Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId);
 
-    Post readPost(Long id);
+    Post readPost(Long postId);
 
     List<Post> readPosts();
 
-    void deletePost(Long id);
+    void deletePost(Long postId);
 
-    Post updatePost(Long id, PostRequestDTO.UpdatePostDTO updatePostDTO);
+    Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId);
 
     List<Post> readPostsByUser(Long userId);
 }

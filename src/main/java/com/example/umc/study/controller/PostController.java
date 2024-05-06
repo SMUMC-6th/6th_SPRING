@@ -13,20 +13,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("api/v1")
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
 
     @PostMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@PathVariable Long userId,
-                                                                  @RequestBody PostRequestDTO.JoinDTO joinDTO) {
-        Post post = postService.createPost(userId, joinDTO);
-        return BaseResponse.onSuccess(PostConverter.toJoinResultDTO(post));
+    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO,
+                                                                        @PathVariable Long userId) {
+        Post post = postService.createPost(createPostDTO, userId);
+        return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
     }
 
     @GetMapping("/posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> readUser(@PathVariable Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
@@ -37,12 +38,6 @@ public class PostController {
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
-    @GetMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
-        List<Post> posts = postService.readPostsByUser(userId);
-        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
-    }
-
     @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deletePost(@PathVariable Long postId) {
         postService.deletePost(postId);
@@ -50,9 +45,15 @@ public class PostController {
     }
 
     @PatchMapping("/posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@PathVariable Long postId,
-                                                                   @RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO) {
-        Post post = postService.updatePost(postId, updatePostDTO);
+    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO,
+                                                                   @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDTO, postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    }
+
+    @GetMapping("/users/{userId}/posts")
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+        List<Post> posts = postService.readPostsByUser(userId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
     }
 }

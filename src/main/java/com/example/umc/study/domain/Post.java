@@ -24,22 +24,21 @@ public class Post extends BaseEntity {
 
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
-
     @OneToMany(mappedBy = "post")
     private List<Reply> replies = new ArrayList<>();
 
     @OneToMany(mappedBy = "post")
     private List<PostCategory> postCategories = new ArrayList<>();
 
-    public void update(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    public void setUser(User user) {
-        this.user = user;
+    public void update(String postTitle, String postContent) {
+        title = postTitle;
+        content = postContent;
+    }
+    public void setUser(User users) {
+        user = users;
     }
 }

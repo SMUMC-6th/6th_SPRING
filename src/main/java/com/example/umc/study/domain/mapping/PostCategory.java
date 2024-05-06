@@ -12,7 +12,6 @@ import lombok.*;
 @Builder
 @Getter
 public class PostCategory extends BaseEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_category_id")
