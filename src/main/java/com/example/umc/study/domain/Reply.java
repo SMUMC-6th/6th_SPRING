@@ -19,7 +19,6 @@ public class Reply extends BaseEntity {
 
     private String content;
 
-    @Setter
     @ManyToOne(fetch = FetchType.LAZY) //fetch란 연관관계 가져올 때 어떻게 가져올지 정하는 것
     //Fetch 타입 1. eager 전략: 즉시 로딩해서 같이 가져오는 것
     //Fetch 타입 2. Lazy 전략: 지연로딩, proxy로 가져와서 get을 쓰면 바로 쓸 수 있는 형태로 만들어서 가져오는 것

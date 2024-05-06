@@ -56,7 +56,7 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
     }
 
-    @GetMapping("/post/{postId}/replies")
+    @GetMapping("/posts/{postId}/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
         List<Reply> replyList = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toJoinReplyPreviewListDTO(replyList));
