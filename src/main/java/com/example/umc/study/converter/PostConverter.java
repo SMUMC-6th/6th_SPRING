@@ -1,29 +1,30 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.Post;
-import com.example.umc.study.dto.request.PostRequestDTO;
-import com.example.umc.study.dto.response.PostResponseDTO;
+import com.example.umc.study.dto.PostRequestDto;
+import com.example.umc.study.dto.PostResponseDto;
 
 import java.util.List;
 
 public class PostConverter {
-
-    public static Post toPost(PostRequestDTO.CreatePostDTO createPostDTO) {
+    public static Post toPost(PostRequestDto.CreatePostDto createPostDto) {
         return Post.builder()
-                .title(createPostDTO.getTitle())
-                .content(createPostDTO.getContent())
+                .title(createPostDto.getTitle())
+                .content(createPostDto.getContent())
                 .build();
     }
 
-    public static PostResponseDTO.CreatePostResultDTO toCreatePostResultDTO(Post post) {
-        return PostResponseDTO.CreatePostResultDTO.builder()
+    public static PostResponseDto.JoinResultDto toJoinResultDto(Post post) {
+        return PostResponseDto.JoinResultDto.builder()
                 .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
                 .createAt(post.getCreatedAt())
                 .build();
     }
 
-    public static PostResponseDTO.PostPreviewDTO toPostPreviewDTO(Post post) {
-        return PostResponseDTO.PostPreviewDTO.builder()
+    public static PostResponseDto.PostPreviewDto toPostPreviewDto(Post post) {
+        return PostResponseDto.PostPreviewDto.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
                 .content(post.getContent())
@@ -32,13 +33,12 @@ public class PostConverter {
                 .build();
     }
 
-    public static PostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<Post> posts) {
-
-        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList = posts.stream().map(PostConverter::toPostPreviewDTO).toList();
-
-        return PostResponseDTO.PostPreviewListDTO.builder()
-                .postPreviewDTOList(postPreviewDTOList)
+    public static PostResponseDto.PostPreviewListDto toPostPreviewListDto(List<Post> postList) {
+        List<PostResponseDto.PostPreviewDto> postPreviewDtoList = postList.stream()
+                .map(PostConverter::toPostPreviewDto)
+                .toList();
+        return PostResponseDto.PostPreviewListDto.builder()
+                .postPreviewDtoList(postPreviewDtoList)
                 .build();
     }
-
 }

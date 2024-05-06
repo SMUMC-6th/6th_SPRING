@@ -1,42 +1,41 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.User;
-import com.example.umc.study.dto.request.UserRequestDTO;
-import com.example.umc.study.dto.response.UserResponseDTO;
+import com.example.umc.study.dto.UserRequestDto;
+import com.example.umc.study.dto.UserResponseDto;
 
 import java.util.List;
 
 public class UserConverter {
 
-    public static User toUser(UserRequestDTO.JoinDTO joinDTO) {
+    public static User toUser(UserRequestDto.JoinDto joinDto) {
         return User.builder()
-                .name(joinDTO.getName())
+                .name(joinDto.getName())
                 .build();
     }
 
-    public static UserResponseDTO.JoinResultDTO toJoinResultDTO(User user) {
-        return UserResponseDTO.JoinResultDTO.builder()
+    public static UserResponseDto.JoinResultDto toJoinResultDto(User user) {
+        return UserResponseDto.JoinResultDto.builder()
                 .userId(user.getId())
                 .createAt(user.getCreatedAt())
                 .build();
     }
 
-    public static UserResponseDTO.UserPreviewDTO toUserPreviewDTO(User user) {
-        return UserResponseDTO.UserPreviewDTO.builder()
+    public static UserResponseDto.UserPreviewDto toUserPreviewDto(User user) {
+        return UserResponseDto.UserPreviewDto.builder()
                 .userId(user.getId())
                 .name(user.getName())
-                .updateAt(user.getUpdatedAt())
                 .createAt(user.getCreatedAt())
+                .updateAt(user.getUpdatedAt())
                 .build();
     }
 
-    public static UserResponseDTO.UserPreviewListDTO toUserPreviewListDTO(List<User> userList) {
-        List<UserResponseDTO.UserPreviewDTO> userPreviewDTOList = userList.stream()
-                                                                    .map(UserConverter::toUserPreviewDTO)
-                                                                    .toList();
-
-        return UserResponseDTO.UserPreviewListDTO.builder()
-                .userPreviewDTOList(userPreviewDTOList)
+    public static UserResponseDto.UserPreviewListDto toUserPreviewListDto(List<User> userList) {
+        List<UserResponseDto.UserPreviewDto> userPreviewDtoList = userList.stream()
+                .map(UserConverter::toUserPreviewDto)
+                .toList();
+        return UserResponseDto.UserPreviewListDto.builder()
+                .userPreviewDtoList(userPreviewDtoList)
                 .build();
     }
 }

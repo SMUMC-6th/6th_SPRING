@@ -1,6 +1,6 @@
 package com.example.umc.study.controller;
 
-import com.example.umc.study.apiPayload.BaseResponse;
+import com.example.umc.study.apiPayLoad.BaseResponse;
 import com.example.umc.study.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

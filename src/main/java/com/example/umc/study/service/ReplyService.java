@@ -1,13 +1,12 @@
 package com.example.umc.study.service;
 
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.request.ReplyRequestDTO;
-import com.example.umc.study.dto.response.ReplyResponseDTO;
+import com.example.umc.study.dto.ReplyRequestDto;
 
 import java.util.List;
 
 public interface ReplyService {
-    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO);
+    Reply createReply(Long userId, Long postId, ReplyRequestDto.CreateReplyDto createReplyDto);
 
     Reply readReply(Long replyId);
 
@@ -15,6 +14,5 @@ public interface ReplyService {
 
     void deleteReply(Long replyId);
 
-
-    List<Reply> findAllByPost(Long postId);
+    List<Reply> readRepliesByPost(Long postId);
 }

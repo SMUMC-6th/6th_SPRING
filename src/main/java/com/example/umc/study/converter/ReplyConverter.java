@@ -1,44 +1,45 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.request.ReplyRequestDTO;
-import com.example.umc.study.dto.response.ReplyResponseDTO;
+import com.example.umc.study.dto.ReplyRequestDto;
+import com.example.umc.study.dto.ReplyResponseDto;
 
 import java.util.List;
 
 public class ReplyConverter {
-
-    public static Reply toReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
+    public static Reply toReply(ReplyRequestDto.CreateReplyDto createReplyDto) {
         return Reply.builder()
-                .title(createReplyDTO.getTitle())
-                .content(createReplyDTO.getContent())
+                .title(createReplyDto.getTitle())
+                .content(createReplyDto.getContent())
                 .build();
     }
 
-    public static ReplyResponseDTO.CreateReplyResultDTO toCreateReplyResultDTO(Reply reply) {
-        return ReplyResponseDTO.CreateReplyResultDTO.builder()
-                .replyId(reply.getId())
-                .createAt(reply.getCreatedAt())
-                .build();
-
-    }
-
-    public static ReplyResponseDTO.ReplyPreviewDTO toReplyPreviewDTO(Reply reply) {
-        return ReplyResponseDTO.ReplyPreviewDTO.builder()
+    public static ReplyResponseDto.JoinResultDto toJoinResultDto(Reply reply) {
+        return ReplyResponseDto.JoinResultDto.builder()
                 .replyId(reply.getId())
                 .title(reply.getTitle())
                 .content(reply.getContent())
-                .updateAt(reply.getUpdatedAt())
                 .createAt(reply.getCreatedAt())
                 .build();
     }
 
-    public static ReplyResponseDTO.ReplyPreviewListDTO toReplyPreviewListDTO(List<Reply> replies) {
-        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList = replies.stream().map(ReplyConverter::toReplyPreviewDTO).toList();
+    public static ReplyResponseDto.ReplyPreviewDto toReplyPreviewDto(Reply reply) {
+        return ReplyResponseDto.ReplyPreviewDto.builder()
+                .replyId(reply.getId())
+                .title(reply.getTitle())
+                .content(reply.getContent())
+                .createAt(reply.getCreatedAt())
+                .updateAt(reply.getUpdatedAt())
+                .build();
+    }
 
-        return ReplyResponseDTO.ReplyPreviewListDTO
-                .builder()
-                .replyPreviewDTOList(replyPreviewDTOList)
+    public static ReplyResponseDto.ReplyPreviewListDto toReplyPreviewListDto(
+            List<Reply> replyList) {
+        List<ReplyResponseDto.ReplyPreviewDto> replyPreviewDtoList = replyList.stream()
+                .map(ReplyConverter::toReplyPreviewDto)
+                .toList();
+        return ReplyResponseDto.ReplyPreviewListDto.builder()
+                .replyPreviewDtoList(replyPreviewDtoList)
                 .build();
     }
 }

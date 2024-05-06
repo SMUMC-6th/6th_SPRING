@@ -1,64 +1,63 @@
 package com.example.umc.study.controller;
 
-import com.example.umc.study.apiPayload.BaseResponse;
+import com.example.umc.study.apiPayLoad.BaseResponse;
 import com.example.umc.study.converter.PostConverter;
 import com.example.umc.study.domain.Post;
-import com.example.umc.study.dto.request.PostRequestDTO;
-import com.example.umc.study.dto.response.PostResponseDTO;
+import com.example.umc.study.dto.PostRequestDto;
+import com.example.umc.study.dto.PostResponseDto;
 import com.example.umc.study.service.PostService;
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/")
+@CrossOrigin("*")
 public class PostController {
 
     private final PostService postService;
 
-    @PostMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@PathVariable Long userId, @RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
-        Post post = postService.createPost(userId, createPostDTO);
-        return BaseResponse.onSuccess(PostConverter.toCreatePostResultDTO(post));
+    @PostMapping("users/{userId}/posts")
+    public BaseResponse<PostResponseDto.JoinResultDto> createPost(
+            @PathVariable Long userId,
+            @RequestBody PostRequestDto.CreatePostDto createPostDto
+    ) {
+        Post post = postService.createPost(userId, createPostDto);
+        return BaseResponse.onSuccess(PostConverter.toJoinResultDto(post));
     }
 
-    @GetMapping("/posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable Long postId) {
+    @GetMapping("posts/{postId}")
+    public BaseResponse<PostResponseDto.PostPreviewDto> readPost(
+            @PathVariable Long postId) {
         Post post = postService.readPost(postId);
-        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDto(post));
     }
 
-    @GetMapping("/posts")
-    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
-        List<Post> posts = postService.readPosts();
-        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
+    @GetMapping("posts")
+    public BaseResponse<PostResponseDto.PostPreviewListDto> readPosts() {
+        List<Post> postList = postService.readPosts();
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(postList));
     }
 
-    @DeleteMapping("/posts/{postId}")
-    public BaseResponse<String> deletePost(@PathVariable Long postId) {
-        postService.deletePost(postId);
-        return BaseResponse.onSuccess("삭제에 성공하였습니다.");
-    }
-
-    @GetMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+    @GetMapping("users/{userId}/posts")
+    public BaseResponse<PostResponseDto.PostPreviewListDto> readPostsByUser(@PathVariable Long userId) {
         List<Post> posts = postService.readPostsByUser(userId);
-        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewListDto(posts));
     }
 
-    @PatchMapping("/posts/{postId}")
-    public BaseResponse<PostResponseDTO.PostPreviewDTO> updatePost(@RequestBody PostRequestDTO.UpdatePostDTO updatePostDTO, @PathVariable Long postId) {
-        Post post = postService.updatePost(updatePostDTO,postId);
-        return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
+    @PatchMapping("posts/{postId}")
+    public BaseResponse<PostResponseDto.PostPreviewDto> updateUser(@RequestBody PostRequestDto.UpdatePostDto updatePostDto,
+                                                                   @PathVariable Long postId) {
+        Post post = postService.updatePost(updatePostDto, postId);
+        return BaseResponse.onSuccess(PostConverter.toPostPreviewDto(post));
+    }
+
+    @DeleteMapping("posts/{postId}")
+    public BaseResponse<String> deletePost(
+            @PathVariable Long postId) {
+        postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 }
