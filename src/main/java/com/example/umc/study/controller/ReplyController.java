@@ -43,4 +43,10 @@ public class ReplyController {
         replyService.deleteReply(replyId);
         return BaseResponse.onSuccess("삭제 되었습니다.");
     }
+
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
 }

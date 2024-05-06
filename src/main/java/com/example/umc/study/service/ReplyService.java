@@ -14,4 +14,6 @@ public interface ReplyService {
     List<Reply> readReplies();
 
     void deleteReply(Long replyId);
+
+    List<Reply> readRepliesByPost(Long postId);
 }
