@@ -2,10 +2,13 @@ package com.example.umc.study.service.impl;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.PostHandler;
+import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.converter.PostConverter;
 import com.example.umc.study.domain.Post;
+import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.PostRequestDTO;
 import com.example.umc.study.repository.PostRepository;
+import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +22,7 @@ import java.util.List;
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Override
     public Post createPost(PostRequestDTO.CreatePostDTO createPostDTO, Long userId) {
@@ -54,5 +58,13 @@ public class PostServiceImpl implements PostService {
         Post post = readPost(postId);
         post.update(updatePostDTO.getTitle(), updatePostDTO.getContent());
         return post;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Post> readPostsByUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_POST));
+        return postRepository.findAllByUser(user);
     }
 }

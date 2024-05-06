@@ -15,4 +15,6 @@ public interface PostService {
     void deletePost(Long postId);
 
     Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId);
+
+    List<Post> readPostsByUser(Long userId);
 }
