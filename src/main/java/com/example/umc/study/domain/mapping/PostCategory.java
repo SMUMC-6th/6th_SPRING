@@ -3,7 +3,6 @@ package com.example.umc.study.domain.mapping;
 import com.example.umc.study.domain.Category;
 import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.common.BaseEntity;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -17,7 +16,6 @@ public class PostCategory extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_category_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;

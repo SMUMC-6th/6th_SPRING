@@ -24,17 +24,17 @@ public class UserConverter {
         return UserResponseDTO.UserPreviewDTO.builder()
                 .userId(user.getId())
                 .name(user.getName())
-                .updateAt(user.getUpdatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .createAt(user.getCreatedAt())
                 .build();
     }
 
-    public static UserResponseDTO.UserPreviewListDTO toUserPreviewListDTO(List<User> userList) {
+    public static UserResponseDTO.UserPreviewListDTO toUserPreviewListDTO(List<User> userList){
         List<UserResponseDTO.UserPreviewDTO> userPreviewDTOList = userList.stream()
-                .map(UserConverter::toUserPreviewDTO)
-                .toList();
+                .map(UserConverter::toUserPreviewDTO).toList();
+
         return UserResponseDTO.UserPreviewListDTO.builder()
-                .userRreviewDTOList(userPreviewDTOList)
+                .userPreviewDTOList(userPreviewDTOList)
                 .build();
     }
 }

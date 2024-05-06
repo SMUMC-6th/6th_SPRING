@@ -1,9 +1,12 @@
 package com.example.umc.study.dto;
 
+import com.example.umc.study.domain.Reply;
+import com.example.umc.study.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,7 +17,7 @@ public class PostResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class PostResultDTO {
+    public static class CreatePostResultDTO{ // post 만든 정보
         private Long postId;
         private LocalDateTime createAt;
     }
@@ -23,7 +26,7 @@ public class PostResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class PostPreviewDTO {
+    public static class PostPreviewDTO{
         private Long postId;
         private String title;
         private String content;
@@ -36,6 +39,8 @@ public class PostResponseDTO {
     @NoArgsConstructor
     @Builder
     public static class PostPreviewListDTO {
-        private List<PostPreviewDTO> postPreviewDTOList;
+        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList;
     }
+
+
 }

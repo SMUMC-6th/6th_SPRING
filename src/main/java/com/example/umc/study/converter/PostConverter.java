@@ -7,15 +7,15 @@ import com.example.umc.study.dto.PostResponseDTO;
 import java.util.List;
 
 public class PostConverter {
-    public static Post toPost(PostRequestDTO.PostDTO postDTO) {
+    public static Post toPost(PostRequestDTO.CreatePostDTO createPostDTO){
         return Post.builder()
-                .title(postDTO.getTitle())
-                .content(postDTO.getContent())
+                .title(createPostDTO.getTitle())
+                .content(createPostDTO.getContent())
                 .build();
     }
 
-    public static PostResponseDTO.PostResultDTO toPostResultDTO(Post post) {
-        return PostResponseDTO.PostResultDTO.builder()
+    public static PostResponseDTO.CreatePostResultDTO toCreatePostResultDTO(Post post) {
+        return PostResponseDTO.CreatePostResultDTO.builder()
                 .postId(post.getId())
                 .createAt(post.getCreatedAt())
                 .build();
@@ -31,12 +31,14 @@ public class PostConverter {
                 .build();
     }
 
-    public static PostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<Post> postList) {
-        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList = postList.stream()
-                .map(PostConverter::toPostPreviewDTO)
-                .toList();
+    public static PostResponseDTO.PostPreviewListDTO toPostPreviewListDTO(List<Post> posts) {
+
+        List<PostResponseDTO.PostPreviewDTO> postPreviewDTOList = posts.stream().map(PostConverter::toPostPreviewDTO).toList();
+
         return PostResponseDTO.PostPreviewListDTO.builder()
                 .postPreviewDTOList(postPreviewDTOList)
                 .build();
     }
+
+
 }

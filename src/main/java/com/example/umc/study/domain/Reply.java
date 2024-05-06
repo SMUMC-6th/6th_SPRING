@@ -1,7 +1,6 @@
 package com.example.umc.study.domain;
 
 import com.example.umc.study.domain.common.BaseEntity;
-import com.fasterxml.jackson.databind.ser.Serializers;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,8 +27,12 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public void setUser(User user) {this.user = user;}
+    // reply 연관관계 편의 메소드
+    public void setUser(User user){
+        this.user = user;
+    }
 
-    public void setPost(Post post) {this.post = post;}
-
+    public void setPost(Post post){
+        this.post = post;
+    }
 }

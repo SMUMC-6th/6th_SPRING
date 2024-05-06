@@ -16,7 +16,6 @@ import com.example.umc.study.service.ReplyService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -28,12 +27,14 @@ public class ReplyServiceImpl implements ReplyService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-    @Transactional
     @Override
-    public Reply createReply(Long userId, Long postId, ReplyRequestDTO.ReplyDTO replyDTO) {
-        Reply reply = ReplyConverter.toReply(replyDTO);
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+    public Reply createReply(Long userId, Long postId, ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
+        Reply reply = ReplyConverter.toReply(createReplyDTO);
+        // reply와 user 및 post 연관관계
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new UserHandler(ErrorStatus._NOT_FOUND_USER);});
+        Post post = postRepository.findById(postId).orElseThrow(()->{
+            throw new PostHandler(ErrorStatus. _NOT_FOUND_POST);});
         reply.setUser(user);
         reply.setPost(post);
         replyRepository.save(reply);
@@ -43,25 +44,27 @@ public class ReplyServiceImpl implements ReplyService {
     @Transactional(readOnly = true)
     @Override
     public Reply readReply(Long replyId) {
-        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
-
-        return reply;
+        return replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
     }
 
     @Transactional(readOnly = true)
     @Override
-    public List<Reply> readReply() { return replyRepository.findAll(); }
+    public List<Reply> readReplies() {
+        return replyRepository.findAll();
+    }
 
-    @Transactional
     @Override
     public void deleteReply(Long replyId) {
-        Reply reply = replyRepository.findById(replyId).orElseThrow(() -> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
+        Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
         replyRepository.delete(reply);
     }
-    @Transactional(readOnly = true)
+
     @Override
+    @Transactional(readOnly = true)
     public List<Reply> readRepliesByPost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(()->{
+            throw new PostHandler(ErrorStatus. _NOT_FOUND_POST);});
         return replyRepository.findAllByPost(post);
     }
+
 }

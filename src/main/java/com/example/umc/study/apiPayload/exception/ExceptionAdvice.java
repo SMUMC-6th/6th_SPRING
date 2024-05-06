@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
-@RestControllerAdvice(annotations = {RestController.class})
+@RestControllerAdvice(annotations = {RestController.class}) // 전역적으로 에러 잡음. 중요
 public class ExceptionAdvice extends ResponseEntityExceptionHandler {
 
 

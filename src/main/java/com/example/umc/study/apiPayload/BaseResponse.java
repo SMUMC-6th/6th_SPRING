@@ -22,7 +22,6 @@ public class BaseResponse<T> {
 
 
     // 성공한 경우 응답 생성
-
     public static <T> BaseResponse<T> onSuccess(T result) {
         return new BaseResponse<>(true, SuccessStatus._OK.getCode() , SuccessStatus._OK.getMessage(), result);
     }

@@ -13,11 +13,10 @@ public class ReplyResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class ReplyResultDTO {
+    public static class CreateReplyResultDTO{ // Reply 정보
         private Long replyId;
         private LocalDateTime createAt;
     }
-
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
@@ -34,7 +33,7 @@ public class ReplyResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class ReplyPreviewListDTO {
-        private List<ReplyPreviewDTO> replyPreviewDTOList;
+    public static class ReplyPreviewListDTO{
+        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList;
     }
 }

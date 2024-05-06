@@ -2,22 +2,22 @@ package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.Reply;
-import com.example.umc.study.dto.PostRequestDTO;
+import com.example.umc.study.dto.PostResponseDTO;
 import com.example.umc.study.dto.ReplyRequestDTO;
 import com.example.umc.study.dto.ReplyResponseDTO;
 
 import java.util.List;
 
 public class ReplyConverter {
-    public static Reply toReply(ReplyRequestDTO.ReplyDTO replyDTO) {
+    public static Reply toReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         return Reply.builder()
-                .title(replyDTO.getTitle())
-                .content(replyDTO.getContent())
+                .title(createReplyDTO.getTitle())
+                .content(createReplyDTO.getContent())
                 .build();
     }
 
-    public static ReplyResponseDTO.ReplyResultDTO toReplyResultDTO(Reply reply) {
-        return ReplyResponseDTO.ReplyResultDTO.builder()
+    public static ReplyResponseDTO.CreateReplyResultDTO toCreateReplyResultDTO(Reply reply) {
+        return ReplyResponseDTO.CreateReplyResultDTO.builder()
                 .replyId(reply.getId())
                 .createAt(reply.getCreatedAt())
                 .build();
@@ -28,16 +28,16 @@ public class ReplyConverter {
                 .replyId(reply.getId())
                 .title(reply.getTitle())
                 .content(reply.getContent())
-                .createAt(reply.getCreatedAt())
                 .updateAt(reply.getUpdatedAt())
+                .createAt(reply.getCreatedAt())
                 .build();
     }
 
-    public static ReplyResponseDTO.ReplyPreviewListDTO toReplyPreviewListDTO(List<Reply> replyList) {
-        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList = replyList.stream()
-                .map(ReplyConverter::toReplyPreviewDTO)
-                .toList();
-        return ReplyResponseDTO.ReplyPreviewListDTO.builder()
+    public static ReplyResponseDTO.ReplyPreviewListDTO toReplyPreviewListDTO(List<Reply> replies) {
+        List<ReplyResponseDTO.ReplyPreviewDTO> replyPreviewDTOList = replies.stream().map(ReplyConverter::toReplyPreviewDTO).toList();
+
+        return ReplyResponseDTO.ReplyPreviewListDTO
+                .builder()
                 .replyPreviewDTOList(replyPreviewDTOList)
                 .build();
     }

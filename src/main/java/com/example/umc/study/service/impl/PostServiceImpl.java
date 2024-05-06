@@ -1,9 +1,9 @@
 package com.example.umc.study.service.impl;
 
-import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.PostHandler;
-import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.converter.PostConverter;
+import com.example.umc.study.apiPayload.code.status.ErrorStatus;
+import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.PostRequestDTO;
@@ -20,26 +20,24 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class PostServiceImpl implements PostService {
-
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    @Transactional
     @Override
-    public Post createPost(Long userId, PostRequestDTO.PostDTO postDTO){
-        Post post = PostConverter.toPost(postDTO);
-        User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+    public Post createPost(Long userId, PostRequestDTO.CreatePostDTO createPostDTO) {
+        Post post = PostConverter.toPost(createPostDTO);
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new UserHandler(ErrorStatus. _NOT_FOUND_USER);
+        });
         post.setUser(user);
         postRepository.save(post);
         return post;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional(readOnly = true) // 우선 적용됨.
     @Override
     public Post readPost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
-
-        return post;
+        return postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
     }
 
     @Transactional(readOnly = true)
@@ -48,24 +46,25 @@ public class PostServiceImpl implements PostService {
         return postRepository.findAll();
     }
 
-    @Transactional
     @Override
     public void deletePost(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST)); // Post니까 postHandler로
         postRepository.delete(post);
     }
 
     @Override
     public Post updatePost(PostRequestDTO.UpdatePostDTO updatePostDTO, Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
-        post.update(updatePostDTO.getTitle(), updatePostDTO.getContent());
+        Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
+        post.update(updatePostDTO.getTitle(),updatePostDTO.getContent()); // title과 content 둘 다 update
         return post;
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Post> readPostsByUser(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
+        User user = userRepository.findById(userId).orElseThrow(()->{
+            throw new UserHandler(ErrorStatus. _NOT_FOUND_USER);
+        });
         return postRepository.findAllByUser(user);
     }
 }
