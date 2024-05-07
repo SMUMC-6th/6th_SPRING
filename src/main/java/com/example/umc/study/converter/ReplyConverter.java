@@ -8,17 +8,13 @@ import java.util.List;
 
 public class ReplyConverter {
 
-    public static Reply toReply(ReplyRequestDTO.JoinDTO joinDTO) {
+    public static Reply toReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
         return Reply.builder()
-                .title(joinDTO.getTitle())
-                .content(joinDTO.getContent())
+                .title(createReplyDTO.getTitle())
+                .content(createReplyDTO.getContent())
                 .build();
     }
 
-    public static ReplyResponseDTO.JoinResultDTO toJoinResultDTO(Reply reply) {
-        return ReplyResponseDTO.JoinResultDTO.builder()
-                .replyId(reply.getId()).build();
-    }
 
     public static ReplyResponseDTO.ReplyPreviewDTO toReplyPreviewDTO(Reply reply) {
         return ReplyResponseDTO.ReplyPreviewDTO.builder()
@@ -43,5 +39,10 @@ public class ReplyConverter {
     }
 
 
+    public static ReplyResponseDTO.CreateReplyResultDTO toCreateReplyResultDTO(Reply reply) {
+        return ReplyResponseDTO.CreateReplyResultDTO.builder()
+                .replyId(reply.getId())
+                .createAt(reply.getCreatedAt())
+                .build();
 
-}
+    }}
