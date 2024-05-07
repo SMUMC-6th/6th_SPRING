@@ -20,23 +20,14 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-<<<<<<< Updated upstream
-public class ReplyServiceImpl implements ReplyService{
-=======
 @Transactional
 public class ReplyServiceImpl implements ReplyService {
->>>>>>> Stashed changes
+
 
     private final ReplyRepository replyRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-//    @Transactional
-//    @Override
-//    public Reply createReply(ReplyRequestDTO.JoinDTO joinDTO) {
-//        Reply reply = ReplyConverter.toReply(joinDTO);
-//        return replyRepository.save(reply);
-//    }
 
     @Transactional(readOnly = true)
     @Override

@@ -13,54 +13,31 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-<<<<<<< Updated upstream
-=======
 @RequestMapping("/api/v1")
 @CrossOrigin("*")
->>>>>>> Stashed changes
 public class PostController {
 
     private final PostService postService;
 
-<<<<<<< Updated upstream
-    @PostMapping("/api/v1/posts")
-    public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@RequestBody PostRequestDTO.JoinDTO joinDTO) {
-        Post post = postService.createPost(joinDTO);
-        return BaseResponse.onSuccess(PostConverter.toJoinResultDTO(post));
 
-    }
-    @GetMapping("/api/v1/posts/{postId}")
-=======
-//    @PostMapping("/posts")
-//    public BaseResponse<PostResponseDTO.JoinResultDTO> createPost(@RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
-//        Post post = postService.createPost(createPostDTO);
-//        return BaseResponse.onSuccess(PostConverter.toJoinResultDTO(post));
-//
-//    }
 
     @GetMapping("/posts/{postId}")
->>>>>>> Stashed changes
     public BaseResponse<PostResponseDTO.PostPreviewDTO> readPost(@PathVariable("postId") Long postId) {
         Post post = postService.readPost(postId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewDTO(post));
     }
 
-    @GetMapping("/api/v1/posts")
+    @GetMapping("/posts")
     public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPosts() {
         List<Post> postList = postService.readPosts();
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(postList));
     }
 
 
-<<<<<<< Updated upstream
-
-    @DeleteMapping("/api/v1/posts/{postId}")
-    public void deleteUser(@PathVariable("postId") Long postId) {
-=======
     @DeleteMapping("/posts/{postId}")
     public BaseResponse<String> deleteUser(@PathVariable("postId") Long postId) {
->>>>>>> Stashed changes
         postService.deletePost(postId);
+        return BaseResponse.onSuccess("삭제 되었습니다.");
     }
 
     @PatchMapping("/posts/{postId}")
