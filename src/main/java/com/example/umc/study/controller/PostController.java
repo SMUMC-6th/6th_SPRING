@@ -25,7 +25,8 @@ import java.util.List;
 public class PostController {
 
     private final PostService postService;
-
+    
+    // 전체 조회
     @PostMapping("/users/{userId}/posts")
     public BaseResponse<PostResponseDTO.CreatePostResultDTO> createPost(@PathVariable Long userId, @RequestBody PostRequestDTO.CreatePostDTO createPostDTO) {
         Post post = postService.createPost(userId, createPostDTO);
