@@ -41,6 +41,19 @@ public class PostResponseDTO {
         List<PostPreviewDTO> postPreviewDTOList;
     }
 
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Builder
+    public static class CreatePostResultDTO {
+        private Long postId;
+        private String title;
+        private String content;
+        private Long userId;
+        private LocalDateTime createdAt;
+        private LocalDateTime updateAt;
+
+    }
 
 
 }

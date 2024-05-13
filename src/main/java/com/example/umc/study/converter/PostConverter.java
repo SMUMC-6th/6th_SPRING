@@ -8,10 +8,10 @@ import java.util.List;
 
 public class PostConverter {
 
-    public static Post toPost(PostRequestDTO.JoinDTO joinDTO) {
+    public static Post toPost(PostRequestDTO.CreatePostDTO createPostDTO) {
         return Post.builder()
-                .title(joinDTO.getTitle())
-                .content(joinDTO.getContent())
+                .title(createPostDTO.getTitle())
+                .content(createPostDTO.getContent())
                 .build();
     }
 
@@ -39,4 +39,12 @@ public class PostConverter {
                 .postPreviewDTOList(postPreviewDTOList)
                 .build();
     }
+
+    public static PostResponseDTO.CreatePostResultDTO torCreatePostResultDTO(Post post) {
+        return  PostResponseDTO.CreatePostResultDTO.builder()
+                .postId(post.getId())
+                .createdAt(post.getCreatedAt())
+                .build();
+    }
+
 }

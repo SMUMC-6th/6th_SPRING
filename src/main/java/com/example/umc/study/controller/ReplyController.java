@@ -13,31 +13,39 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/v1")
+@CrossOrigin("*")
+
 public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("/api/v1/replys")
-    public BaseResponse<ReplyResponseDTO.JoinResultDTO> createReply(@RequestBody ReplyRequestDTO.JoinDTO joinDTO) {
-        Reply reply = replyService.createReply(joinDTO);
-        return BaseResponse.onSuccess(ReplyConverter.toJoinResultDTO(reply));
-
+    @PostMapping("/users/{userId}/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.CreateReplyResultDTO> createReply(@RequestBody ReplyRequestDTO.CreateReplyDTO createReplyDTO, @PathVariable("userId") Long userId, @PathVariable("postId") Long postId) {
+        Reply reply = replyService.createReply(createReplyDTO, userId, postId);
+        return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
     }
-    @GetMapping("/api/v1/replys/{replyId}")
+
+    @GetMapping("/replys/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable("replyId") Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/api/v1/replys")
+    @GetMapping("/replys")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplys() {
         List<Reply> replyList = replyService.readReplys();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
 
-    @DeleteMapping("/api/v1/replys/{replyId}")
+    @DeleteMapping("/replys/{replyId}")
     public void deleteReply(@PathVariable("replyId") Long replyId) {
         replyService.deletePost(replyId);
+    }
+    @GetMapping("/posts/{postId}/replies")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readRepliesByPost(@PathVariable("postId") Long postId) {
+        List<Reply> replies = replyService.readRepliesByPost(postId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
 
 }

@@ -14,7 +14,7 @@ public class ReplyResponseDTO {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class JoinResultDTO {
+    public static class CreateReplyResultDTO {
 
         private Long replyId;
         private LocalDateTime createAt;
