@@ -32,7 +32,7 @@ public class User extends BaseEntity {
 
     private String email;
 
-    private String pw;
+    private String password;
 
     private String role;
 
