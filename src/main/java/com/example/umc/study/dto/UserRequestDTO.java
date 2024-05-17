@@ -8,10 +8,14 @@ public class UserRequestDTO {
     public static class JoinDTO {
 
         private String name;
+        private String email;
+        private String password;
     }
 
     @Getter
     public static class UpdateUserDTO {
         private String name;
     }
+
+
 }
