@@ -6,6 +6,8 @@ public class UserRequestDto {
     @Getter
     public static class JoinDto {
         private String name;
+        private String email;
+        private String password;
     }
 
     @Getter
