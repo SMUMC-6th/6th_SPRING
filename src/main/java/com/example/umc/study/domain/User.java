@@ -20,7 +20,14 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
+    private String password;
+
     private String name;
+
+    private String email;
+
+    private String role;
+
 
     //user과 post는 erd상에서 일대다로 매핑되어있다.
     //user은 일대다중 일쪽이기때문에 onetomany를 넣어주고 post와 매핑이 되어있는 곳에 mappedby=user을 붙어주어야함
