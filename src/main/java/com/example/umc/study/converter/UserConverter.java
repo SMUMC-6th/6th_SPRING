@@ -3,14 +3,17 @@ package com.example.umc.study.converter;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.UserRequestDto;
 import com.example.umc.study.dto.UserResponseDto;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
 public class UserConverter {
 
-    public static User toUser(UserRequestDto.JoinDto joinDto) {
+    public static User toUser(UserRequestDto.JoinDto joinDto, PasswordEncoder passwordEncoder) {
         return User.builder()
                 .name(joinDto.getName())
+                .password(passwordEncoder.encode(joinDto.getPassword()))
+                .email(joinDto.getEmail())
                 .build();
     }
 
