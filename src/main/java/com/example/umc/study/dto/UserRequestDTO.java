@@ -7,6 +7,8 @@ public class UserRequestDTO {
     @Getter
     public static class JoinDTO {
         private String name;
+        private String email;
+        private String password;
     }
 
     @Getter
