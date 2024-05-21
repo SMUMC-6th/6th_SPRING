@@ -17,8 +17,10 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
-
     private String name;
+    private String email;
+    private String password;
+    private String role;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
