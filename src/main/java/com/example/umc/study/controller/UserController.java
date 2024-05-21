@@ -7,6 +7,7 @@ import com.example.umc.study.dto.request.UserRequestDTO;
 import com.example.umc.study.dto.response.UserResponseDTO;
 import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;

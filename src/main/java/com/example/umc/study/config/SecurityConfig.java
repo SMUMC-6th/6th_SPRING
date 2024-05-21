@@ -1,7 +1,9 @@
 package com.example.umc.study.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -13,9 +15,10 @@ import java.util.stream.Stream;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
+@Configuration
 public class SecurityConfig {
 
-    private final String[] swaggerUrls = {"/swagger-ui/**", "/swagger-resources/**", "/v3/**"};
+    private final String[] swaggerUrls = {"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**"};
     private final String[] allowUrls = {
             "/api/v1/posts/**",
             "/api/v1/replies/**"
@@ -32,29 +35,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
 
-        // cors 비활성화
+        // cors disable
         http.cors(cors -> cors
                 .configurationSource(CorsConfig.apiConfigurationSource()));
 
+        // csrf disable
+        http.csrf(AbstractHttpConfigurer::disable);
+
         // form 로그인 방식 disable
-        http.formLogin(AbstractHttpConfigurer::disable);
+        http.formLogin(withDefaults());
 
         // http basic 인증 방식 disable
-        http.httpBasic(AbstractHttpConfigurer::disable);
+        http.httpBasic(withDefaults());
 
         // 경로별 인가
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                .requestMatchers("/api/v1/users/**").permitAll()
+                                .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                                 .requestMatchers(allowedUrls).permitAll()
                                 .anyRequest().authenticated()
                 );
 
         return http.build();
     }
-
-
-
 
 }
