@@ -25,8 +25,6 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> requests
-                .requestMatchers("/api/v1/replies/**").permitAll()
-                .requestMatchers("/api/v1/posts/**").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                 .requestMatchers(allowUrl).permitAll()
                 .anyRequest().authenticated()); // 모든 요청에 대해 인증을 하게 함.
