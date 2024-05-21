@@ -30,7 +30,7 @@ public class User extends BaseEntity {
 
     private String name;
 
-    private Long password;
+    private String password;
 
     private String email;
 
