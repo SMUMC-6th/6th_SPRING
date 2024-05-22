@@ -4,8 +4,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAut
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,16 +18,24 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
+
+    private final String[] allowUrl = {
+            "/swagger-ui/**",
+            "/swagger-resources/**",
+            "/v3/api-docs/**",
+            "/api/v1/posts/**",
+            "/api/v1/replies/**"
+    };
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/api/v1/replies/**").permitAll()
-                        .requestMatchers("/api/v1/posts/**").permitAll()
-                        .requestMatchers("/api/v1/users/**").hasAnyAuthority("admin")
+                        .requestMatchers(allowUrl).permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                         .anyRequest().authenticated());
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
