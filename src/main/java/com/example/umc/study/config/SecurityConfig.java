@@ -30,7 +30,21 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
+
     @Bean
+    @Order(0)
+    public SecurityFilterChain adminFilter(HttpSecurity http) throws Exception {
+        http
+                .securityMatcher("api/v1/admin/**")
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().hasRole("ADMIN")
+                );
+        http.formLogin(withDefaults());
+        http.httpBasic(withDefaults());
+        return http.build();
+    }
+    @Bean
+    @Order(1)
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable);
         http.authorizeHttpRequests((requests) -> requests
