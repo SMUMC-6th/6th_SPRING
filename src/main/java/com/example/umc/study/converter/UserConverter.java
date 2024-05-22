@@ -3,6 +3,7 @@ package com.example.umc.study.converter;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.dto.UserResponseDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -10,9 +11,11 @@ public class UserConverter {
     //User를 빌더패턴으로
     //Converter안의 메소드 명은 to(리턴시켜주는 것)
 
-    public static User toUser(UserRequestDTO.JoinDTO joinDTO) {
+    public static User toUser(UserRequestDTO.JoinDTO joinDTO, PasswordEncoder passwordEncoder) {
         return User.builder()
                 .name(joinDTO.getName())
+                .password(passwordEncoder.encode(joinDTO.getPassword()))
+                .email(joinDTO.getEmail())
                 .build();
     }
 

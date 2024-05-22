@@ -8,6 +8,7 @@ import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public User createUser(UserRequestDTO.JoinDTO joinDTO) {
-        User user = UserConverter.toUser(joinDTO);
+        User user = UserConverter.toUser(joinDTO, passwordEncoder);
         return userRepository.save(user);
     }
 
