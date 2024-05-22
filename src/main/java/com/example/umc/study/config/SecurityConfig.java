@@ -27,8 +27,6 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/v1/posts/**").permitAll()
-                        .requestMatchers("/api/v1/replies/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                         .requestMatchers(allowUrl).permitAll()
                         .anyRequest().authenticated())
