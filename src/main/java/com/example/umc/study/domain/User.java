@@ -21,6 +21,12 @@ public class User extends BaseEntity {
 
     private String name;
 
+    private String email;
+
+    private String password;
+
+    private String role;
+
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 

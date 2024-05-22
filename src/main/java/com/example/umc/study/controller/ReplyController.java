@@ -26,19 +26,19 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toCreateReplyResultDTO(reply));
     }
 
-    @GetMapping("/replys/{replyId}")
+    @GetMapping("/replies/{replyId}")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> readReply(@PathVariable("replyId") Long replyId) {
         Reply reply = replyService.readReply(replyId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/replys")
+    @GetMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplys() {
         List<Reply> replyList = replyService.readReplys();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
     }
 
-    @DeleteMapping("/replys/{replyId}")
+    @DeleteMapping("/replies/{replyId}")
     public void deleteReply(@PathVariable("replyId") Long replyId) {
         replyService.deletePost(replyId);
     }
