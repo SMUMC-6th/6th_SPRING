@@ -67,4 +67,10 @@ public class ReplyServiceImpl implements ReplyService {
         return replyRepository.findAllByPost(post);
     }
 
+    @Override
+    public Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId) {
+        Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
+        reply.update(updateReplyDTO.getTitle(),updateReplyDTO.getContent());
+        return reply;
+    }
 }

@@ -35,4 +35,17 @@ public class Reply extends BaseEntity {
     public void setPost(Post post){
         this.post = post;
     }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
