@@ -58,6 +58,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated());
 
         http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);
+        // http.formLogin(c->c.loginProcessingUrl("/api/login").disable());
 
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
