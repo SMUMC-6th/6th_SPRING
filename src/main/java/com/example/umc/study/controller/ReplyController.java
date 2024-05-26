@@ -6,15 +6,8 @@ import com.example.umc.study.domain.Reply;
 import com.example.umc.study.dto.request.ReplyRequestDTO;
 import com.example.umc.study.dto.response.ReplyResponseDTO;
 import com.example.umc.study.service.ReplyService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -53,5 +46,12 @@ public class ReplyController {
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> findAllByPost(@PathVariable Long postId) {
         List<Reply> replies = replyService.findAllByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
+    }
+
+    @PatchMapping ("/replies/{replyId}")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> updateReply(@RequestBody ReplyRequestDTO.UpdateReplyDTO updateReplyDTO,
+                                                                      @PathVariable Long replyId) {
+        Reply reply = replyService.updateReply(updateReplyDTO, replyId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 }
