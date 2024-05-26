@@ -14,6 +14,7 @@ public class UserConverter {
                 .name(joinDto.getName())
                 .password(passwordEncoder.encode(joinDto.getPassword()))
                 .email(joinDto.getEmail())
+                .role(joinDto.getRole())
                 .build();
     }
 
@@ -21,6 +22,7 @@ public class UserConverter {
         return UserResponseDto.JoinResultDto.builder()
                 .userId(user.getId())
                 .createAt(user.getCreatedAt())
+                .role(user.getRole())
                 .build();
     }
 
