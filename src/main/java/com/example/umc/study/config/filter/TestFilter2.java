@@ -19,12 +19,10 @@ public class TestFilter2 implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            log.info("Anonymous User");
-        } else {
-            log.info("User: " + authentication.getName());
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            log.info(authentication.getName());
+            filterChain.doFilter(servletRequest, servletResponse);
         }
-        filterChain.doFilter(servletRequest, servletResponse);
     }
 
 

@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
@@ -38,7 +39,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE,"/api/v1/replies/{replyId}").hasRole("ADMIN")
                 .requestMatchers(allowUrl).permitAll()
                 .anyRequest().authenticated());
-        http.addFilterAfter(new TestFilter2(), BasicAuthenticationFilter.class);
+        http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);
+        http.addFilterAfter(new TestFilter2(), AnonymousAuthenticationFilter.class);
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
         return http.build();
