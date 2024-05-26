@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -36,7 +37,7 @@ public class SecurityConfig {
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class)
-                .addFilterAfter(testFilter2(), SecurityContextHolderFilter.class)
+                .addFilterAfter(testFilter2(), AnonymousAuthenticationFilter.class)
                 .cors(configurer -> configurer
                         .configurationSource(request -> {
                             CorsConfiguration config = new CorsConfiguration();

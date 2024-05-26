@@ -2,6 +2,7 @@ package com.example.umc.study.config.filter;
 
 import jakarta.servlet.*;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -18,10 +19,9 @@ public class TestFilter2 implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        boolean hasAuthenticated = authentication != null && authentication.isAuthenticated();
 
-        if (!hasAuthenticated) {
-            log.info("anonymousUser");
+        if (authentication instanceof AnonymousAuthenticationToken) {
+            log.info(authentication.getName());
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
