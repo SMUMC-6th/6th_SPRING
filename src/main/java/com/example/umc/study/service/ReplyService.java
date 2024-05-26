@@ -2,7 +2,6 @@ package com.example.umc.study.service;
 
 import com.example.umc.study.domain.Reply;
 import com.example.umc.study.dto.request.ReplyRequestDTO;
-import com.example.umc.study.dto.response.ReplyResponseDTO;
 
 import java.util.List;
 
