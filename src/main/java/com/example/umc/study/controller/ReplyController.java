@@ -49,4 +49,10 @@ public class ReplyController {
         replyService.deleteReply(replyId);
         return BaseResponse.onSuccess("삭제 되었습니다.");
     }
+
+    @PatchMapping("/replies/{replyId}")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> updateReply(@PathVariable Long replyId, @RequestBody ReplyRequestDTO.UpdateReplyDTO dto) {
+        Reply reply = replyService.updateReply(replyId, dto);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
+    }
 }
