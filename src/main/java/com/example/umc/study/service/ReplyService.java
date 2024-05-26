@@ -17,4 +17,6 @@ public interface ReplyService {
 
 
     List<Reply> findAllByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId);
 }
