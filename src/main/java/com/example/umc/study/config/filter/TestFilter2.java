@@ -17,7 +17,6 @@ public class TestFilter2 implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication == null || authentication instanceof AnonymousAuthenticationToken) {
-            System.out.println("anonymousUser");
             System.out.println(authentication.getName());
             chain.doFilter(request, response);
         }

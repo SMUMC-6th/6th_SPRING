@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -38,7 +38,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()); // 모든 요청에 대해 인증을 하게 함.
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());
-        http.addFilterAfter(new TestFilter2(), BasicAuthenticationFilter.class);
+        http.addFilterAfter(new TestFilter2(), AnonymousAuthenticationFilter.class);
         return http.build();
     }
 
