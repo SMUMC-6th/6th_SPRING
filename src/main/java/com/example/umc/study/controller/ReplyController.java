@@ -32,7 +32,7 @@ public class ReplyController {
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
     }
 
-    @GetMapping("/replies")
+    @PostMapping("/replies")
     public BaseResponse<ReplyResponseDTO.ReplyPreviewListDTO> readReplys() {
         List<Reply> replyList = replyService.readReplys();
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replyList));
@@ -47,5 +47,13 @@ public class ReplyController {
         List<Reply> replies = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
+
+    @PatchMapping("/replies/{replyId}")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> updateReply(@RequestBody ReplyRequestDTO.UpdateReplyDTO updateReplyDTO,
+                                                                   @PathVariable("replyId") Long replyId) {
+        Reply reply = replyService.updateReply(updateReplyDTO, replyId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
+    }
+
 
 }

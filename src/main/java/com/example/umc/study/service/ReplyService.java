@@ -18,4 +18,6 @@ public interface ReplyService {
     Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO, Long userId, Long postId);
 
     List<Reply> readRepliesByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long postId);
 }
