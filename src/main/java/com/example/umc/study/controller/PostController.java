@@ -51,7 +51,7 @@ public class PostController {
     }
 
     @GetMapping("/users/{userId}/posts")
-    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable Long userId) {
+    public BaseResponse<PostResponseDTO.PostPreviewListDTO> readPostsByUser(@PathVariable(name = "userId") Long userId) {
         List<Post> posts = postService.readPostsByUser(userId);
         return BaseResponse.onSuccess(PostConverter.toPostPreviewListDTO(posts));
     }

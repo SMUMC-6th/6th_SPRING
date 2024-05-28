@@ -1,41 +1,57 @@
 package com.example.umc.study.config;
 
-import com.example.umc.study.config.filter.TestFilter;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import com.example.umc.study.config.filter.jwt.filter.JWTExceptionFilter;
+import com.example.umc.study.config.filter.jwt.error.JwtAccessDeniedHandler;
+import com.example.umc.study.config.filter.jwt.error.JwtAuthenticationEntryPoint;
+import com.example.umc.study.config.filter.jwt.filter.LoginFilter;
+import com.example.umc.study.config.filter.jwt.filter.JWTFilter;
+import com.example.umc.study.config.filter.jwt.JWTUtil;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
+
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 
 import java.util.Collections;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
+    private final PrincipalDetailsService principalDetailsService;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final String[] allowUrl = {
             "/swagger-ui/**",
             "/swagger-resources/**",
             "/v3/api-docs/**",
             "/api/v1/posts/**",
-            "/api/v1/replies/**"
+            "/api/v1/replies/**",
+            "/login"
     };
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -50,6 +66,7 @@ public class SecurityConfig {
         }));
 
         http.csrf(AbstractHttpConfigurer::disable);
+
         http.authorizeHttpRequests((requests) -> requests
                 .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
                 .requestMatchers(HttpMethod.POST,"/api/v1/users/{userId}/posts").hasAnyRole("USER", "ADMIN")
@@ -57,11 +74,29 @@ public class SecurityConfig {
                 .requestMatchers(allowUrl).permitAll()
                 .anyRequest().authenticated());
 
-        http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);
-        // http.formLogin(c->c.loginProcessingUrl("/api/login").disable());
+        http.exceptionHandling(
+                (configurer ->
+                        configurer
+                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                                .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
+        );
 
-        http.formLogin(withDefaults());
-        http.httpBasic(withDefaults());
+//        http.addFilterAfter(new TestFilter(), AnonymousAuthenticationFilter.class);
+
+
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTFilter(jwtUtil, principalDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTExceptionFilter(), JWTFilter.class);
+
+        http.formLogin(AbstractHttpConfigurer::disable);
+        http.httpBasic(AbstractHttpConfigurer::disable);
+
+        http
+                .sessionManagement((session) -> session
+                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
+
         return http.build();
     }
 
