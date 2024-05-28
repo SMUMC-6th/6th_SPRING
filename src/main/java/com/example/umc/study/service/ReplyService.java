@@ -17,4 +17,6 @@ public interface ReplyService {
     List<Reply> readReplies();
 
     List<Reply> readRepliesByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId);
 }
