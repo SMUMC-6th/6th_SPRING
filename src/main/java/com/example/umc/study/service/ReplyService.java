@@ -16,4 +16,6 @@ public interface ReplyService {
     void deleteReply(Long replyId);
 
     List<Reply> readRepliesByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId);
 }
