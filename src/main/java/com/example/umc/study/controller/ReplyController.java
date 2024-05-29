@@ -50,4 +50,11 @@ public class ReplyController {
         List<Reply> replies = replyService.readRepliesByPost(postId);
         return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewListDTO(replies));
     }
+
+    @PatchMapping ("/replies/{replyId}")
+    public BaseResponse<ReplyResponseDTO.ReplyPreviewDTO> updateReply(@RequestBody ReplyRequestDTO.UpdateReplyDTO updateReplyDTO,
+                                                                      @PathVariable Long replyId) {
+        Reply reply = replyService.updateReply(updateReplyDTO, replyId);
+        return BaseResponse.onSuccess(ReplyConverter.toReplyPreviewDTO(reply));
+    }
 }
