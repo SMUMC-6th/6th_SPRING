@@ -26,7 +26,7 @@ public class ReplyServiceImpl implements ReplyService {
 
 
     @Override
-    public Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
+    public Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO,Long userId,Long postId) {
         Reply reply = ReplyConverter.toReply(createReplyDTO);
         replyRepository.save(reply);
         return reply;
