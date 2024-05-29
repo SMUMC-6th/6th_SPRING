@@ -1,14 +1,16 @@
 package com.example.umc.study.config;
 
+import com.example.umc.study.auth.filter.TestFilter2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
 
 import java.util.Arrays;
 import java.util.stream.Stream;
@@ -16,6 +18,7 @@ import java.util.stream.Stream;
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
+@EnableWebSecurity(debug = true)
 public class SecurityConfig {
 
     private final String[] swaggerUrls = {"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**"};
@@ -35,7 +38,7 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         // cors disable
         http.cors(cors -> cors
@@ -52,10 +55,18 @@ public class SecurityConfig {
 
         // 경로별 인가
         http.authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                .requestMatchers(HttpMethod.POST,"/api/v1/users").permitAll()
-                                .requestMatchers(allowedUrls).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/{userId}/posts").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1//posts/{postId}").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users/{userId}/posts/{postId}/replies").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/replies/{replyId}").hasAnyRole("ADMIN")
+                        .requestMatchers(allowedUrls).permitAll()
+                        .requestMatchers(HttpMethod.POST, "api/v1/users").permitAll()
                                 .anyRequest().authenticated()
                 );
+
+        /*http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);*/
+        http.addFilterAfter(new TestFilter2(),AnonymousAuthenticationFilter.class);
 
         return http.build();
     }

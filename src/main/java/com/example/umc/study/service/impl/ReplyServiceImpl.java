@@ -26,10 +26,9 @@ public class ReplyServiceImpl implements ReplyService {
 
 
     @Override
-    public Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO) {
+    public Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO, Long userId, Long postId) {
         Reply reply = ReplyConverter.toReply(createReplyDTO);
-        replyRepository.save(reply);
-        return reply;
+        return replyRepository.save(reply);
     }
 
     @Transactional(readOnly = true)
@@ -55,5 +54,12 @@ public class ReplyServiceImpl implements ReplyService {
     public List<Reply> findAllByPost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(()-> new PostHandler(ErrorStatus._NOT_FOUND_POST));
         return replyRepository.findAllByPost(post);
+    }
+
+    @Override
+    public Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId) {
+        Reply reply = replyRepository.findById(replyId).orElseThrow(()-> new ReplyHandler(ErrorStatus._NOT_FOUND_REPLY));
+        reply.update(updateReplyDTO.getTitle(), updateReplyDTO.getContent());
+        return reply;
     }
 }

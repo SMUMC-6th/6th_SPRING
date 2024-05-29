@@ -7,7 +7,7 @@ import com.example.umc.study.dto.response.ReplyResponseDTO;
 import java.util.List;
 
 public interface ReplyService {
-    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO);
+    Reply createReply(ReplyRequestDTO.CreateReplyDTO createReplyDTO, Long userId, Long postId);
 
     Reply readReply(Long replyId);
 
@@ -15,6 +15,7 @@ public interface ReplyService {
 
     void deleteReply(Long replyId);
 
-
     List<Reply> findAllByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId);
 }
