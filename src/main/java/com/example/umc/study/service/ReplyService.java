@@ -1,6 +1,8 @@
 package com.example.umc.study.service;
 
+import com.example.umc.study.domain.Post;
 import com.example.umc.study.domain.Reply;
+import com.example.umc.study.dto.request.PostRequestDTO;
 import com.example.umc.study.dto.request.ReplyRequestDTO;
 import com.example.umc.study.dto.response.ReplyResponseDTO;
 
@@ -17,4 +19,6 @@ public interface ReplyService {
 
 
     List<Reply> findAllByPost(Long postId);
+
+    Reply updateReply(ReplyRequestDTO.UpdateReplyDTO updateReplyDTO, Long replyId);
 }
