@@ -8,6 +8,7 @@ public class UserRequestDTO {
         private String name; //User 엔티티에 name만 받으면 되기 때문
         private String email;
         private String password;
+        private String role;
     }
 
     @Getter

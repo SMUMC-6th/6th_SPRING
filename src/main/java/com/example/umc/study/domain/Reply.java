@@ -34,8 +34,15 @@ public class Reply extends BaseEntity {
     @JoinColumn(name = "post_id")
     private Post post;
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     // 연관관계 편의 메소드
     public void setUser(User user) { this.user = user; }
 
     public void setPost(Post post) { this.post = post; }
+
+
 }
