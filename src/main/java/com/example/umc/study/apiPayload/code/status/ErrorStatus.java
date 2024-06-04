@@ -21,7 +21,10 @@ public enum ErrorStatus implements BaseErrorCode {
     _NOT_FOUND_POST(HttpStatus.NOT_FOUND, "POST400", "게시글을 찾을 수 없습니다"),
 
     //reply에러
-    _NOT_FOUND_REPLY(HttpStatus.NOT_FOUND, "REPLY400", "댓글을 찾을 수 없습니다");
+    _NOT_FOUND_REPLY(HttpStatus.NOT_FOUND, "REPLY400", "댓글을 찾을 수 없습니다"),
+
+    //테스트 에러
+    _TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이것은 테스트");
 
     private final HttpStatus httpStatus;
     private final String code;
