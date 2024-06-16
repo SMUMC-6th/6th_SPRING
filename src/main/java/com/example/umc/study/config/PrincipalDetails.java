@@ -19,7 +19,7 @@ public class PrincipalDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<String> roles = new ArrayList<>();
-        roles.add(user.getRole());
+        roles.add(user.getRole().name());
         return roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 

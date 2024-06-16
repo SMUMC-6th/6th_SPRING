@@ -3,6 +3,7 @@ package com.example.umc.study.converter;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.request.UserRequestDTO;
 import com.example.umc.study.dto.response.UserResponseDTO;
+import com.example.umc.study.domain.enums.Role;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public class UserConverter {
                 .name(joinDTO.getName())
                 .password(passwordEncoder.encode((joinDTO).getPassword()))
                 .email(joinDTO.getEmail())
-                .role(joinDTO.getRole())
+                .role(Role.valueOf(joinDTO.getRole()))
                 .build();
     }
 
