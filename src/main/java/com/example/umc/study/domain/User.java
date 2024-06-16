@@ -1,6 +1,7 @@
 package com.example.umc.study.domain;
 
 import com.example.umc.study.domain.common.BaseEntity;
+import com.example.umc.study.domain.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,13 +23,15 @@ public class User extends BaseEntity {
     private String name;
     private String email;
     private String password;
-    private String role;
 
     @OneToMany(mappedBy = "user")
     private List<Post> posts = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<Reply> replies = new ArrayList<>();
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public void update(String name) {
         this.name = name;

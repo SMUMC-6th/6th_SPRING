@@ -29,12 +29,8 @@ public class ReplyServiceImpl implements ReplyService {
     private final PostRepository postRepository;
 
     @Override
-    public Reply createReply(Long userId, Long postId, ReplyRequestDto.CreateReplyDto createReplyDto) {
+    public Reply createReply(ReplyRequestDto.CreateReplyDto createReplyDto) {
         Reply reply = ReplyConverter.toReply(createReplyDto);
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
-        reply.setUser(user);
-        Post post = postRepository.findById(postId).orElseThrow(() -> new PostHandler(ErrorStatus._NOT_FOUND_POST));
-        reply.setPost(post);
         replyRepository.save(reply);
         return replyRepository.save(reply);
     }
