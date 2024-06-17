@@ -1,8 +1,8 @@
 package com.example.umc.study.security;
 
 import com.example.umc.study.security.filter.JWTExceptionFilter;
-import com.example.umc.study.security.error.JwtAccessDeniedHandler;
-import com.example.umc.study.security.error.JwtAuthenticationEntryPoint;
+import com.example.umc.study.security.errorHandle.JwtAccessDeniedHandler;
+import com.example.umc.study.security.errorHandle.JwtAuthenticationEntryPoint;
 import com.example.umc.study.security.filter.LoginFilter;
 import com.example.umc.study.security.filter.JWTFilter;
 import com.example.umc.study.security.service.PrincipalDetailsService;
