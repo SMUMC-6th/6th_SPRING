@@ -19,13 +19,11 @@ public class ReplyController {
 
     private final ReplyService replyService;
 
-    @PostMapping("users/{userId}/posts/{postId}/replies")
+    @PostMapping("/replies")
     public BaseResponse<ReplyResponseDto.JoinResultDto> createReply(
-            @PathVariable Long userId,
-            @PathVariable Long postId,
             @RequestBody ReplyRequestDto.CreateReplyDto createReplyDto
     ) {
-        Reply reply = replyService.createReply(userId, postId, createReplyDto);
+        Reply reply = replyService.createReply(createReplyDto);
         return BaseResponse.onSuccess(ReplyConverter.toJoinResultDto(reply));
     }
 
