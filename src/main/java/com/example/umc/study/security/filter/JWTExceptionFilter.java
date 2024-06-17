@@ -1,4 +1,4 @@
-package com.example.umc.study.config.filter.jwt.filter;
+package com.example.umc.study.security.filter;
 
 import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;

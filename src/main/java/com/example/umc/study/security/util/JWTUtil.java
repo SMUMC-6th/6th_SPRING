@@ -1,4 +1,4 @@
-package com.example.umc.study.config.filter.jwt;
+package com.example.umc.study.security.util;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.AuthHandler;
@@ -60,9 +60,7 @@ public class JWTUtil {
     public boolean isTokenValid(String token) {
         try {
             Jws<Claims> claims = getClaims(token);
-            Date expiredDate = claims.getBody().getExpiration();
-            Date now = new Date();
-            return expiredDate.after(now);
+            return claims.getBody().getExpiration().after(new Date());
         } catch (ExpiredJwtException e) {
             throw new AuthHandler(ErrorStatus._AUTH_EXPIRE_TOKEN);
         } catch (SignatureException

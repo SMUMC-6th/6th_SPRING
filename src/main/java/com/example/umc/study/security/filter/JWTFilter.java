@@ -1,9 +1,9 @@
-package com.example.umc.study.config.filter.jwt.filter;
+package com.example.umc.study.security.filter;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.AuthHandler;
-import com.example.umc.study.config.PrincipalDetailsService;
-import com.example.umc.study.config.filter.jwt.JWTUtil;
+import com.example.umc.study.security.service.PrincipalDetailsService;
+import com.example.umc.study.security.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

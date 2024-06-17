@@ -1,9 +1,10 @@
-package com.example.umc.study.config;
+package com.example.umc.study.security.service;
 
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.repository.UserRepository;
+import com.example.umc.study.security.details.PrincipalDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

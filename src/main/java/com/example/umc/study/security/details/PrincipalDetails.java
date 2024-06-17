@@ -1,4 +1,4 @@
-package com.example.umc.study.config;
+package com.example.umc.study.security.details;
 
 import com.example.umc.study.domain.User;
 import lombok.RequiredArgsConstructor;

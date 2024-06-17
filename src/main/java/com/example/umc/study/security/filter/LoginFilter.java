@@ -1,10 +1,10 @@
-package com.example.umc.study.config.filter.jwt.filter;
+package com.example.umc.study.security.filter;
 
 import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.AuthHandler;
-import com.example.umc.study.config.PrincipalDetails;
-import com.example.umc.study.config.filter.jwt.JWTUtil;
+import com.example.umc.study.security.details.PrincipalDetails;
+import com.example.umc.study.security.util.JWTUtil;
 import com.example.umc.study.dto.request.LoginRequestDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;

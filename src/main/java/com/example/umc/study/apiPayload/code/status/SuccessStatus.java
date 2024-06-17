@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum SuccessStatus implements BaseCode {
 
-    _OK(HttpStatus.OK, "COMMON200", "성공입니다."),
+    _OK(HttpStatus.OK, "COMMON200", "성공 입니다."),
     _CREATED(HttpStatus.CREATED, "COMMON201", "요청 성공 및 리소스 생성됨");
 
     private final HttpStatus httpStatus;
