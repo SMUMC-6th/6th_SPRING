@@ -18,4 +18,10 @@ public class UserRequestDTO {
     public static class UpdateUserDTO {
         private String name;
     }
+
+    @Getter
+    public static class LoginRequestDTO {
+        private String email;
+        private String password;
+    }
 }
