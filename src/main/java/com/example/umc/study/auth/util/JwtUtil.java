@@ -34,10 +34,10 @@ public class JwtUtil {
         String authorization = request.getHeader("Authorization");
 
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-            log.info("[*] Token 없어");
+            log.warn("[*] No Token in req");
             throw new AuthHandler(ErrorStatus._TOKEN_NOT_FOUND);
         }
-
+        log.info("[*] Token exists");
         return authorization.split(" ")[1];
     }
 

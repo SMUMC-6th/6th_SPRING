@@ -32,8 +32,8 @@ public enum ErrorStatus implements BaseErrorCode {
 
     // 인증관련
     _AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AUTH401_0", "인증에 실패했습니다."),
-    _BAD_CREDENTIALS(HttpStatus.UNAUTHORIZED, "AUTH401_1", "잘못된 자격 증명 : 비밀번호가 틀렸습니다."),
-    _ACCOUNT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "AUTH401_4", "잘못된 자격 증명 : 계정을 찾을 수 없습니다.");
+    _BAD_CREDENTIALS(HttpStatus.UNAUTHORIZED, "AUTH401_1", "비밀번호를 잘못 입력했습니다."),
+    _ACCOUNT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "AUTH401_4", "아이디를 잘못 입력했습니다. 회원가입 후 이용해주세요.");
 
     private final HttpStatus httpStatus;
     private final String code;

@@ -1,5 +1,6 @@
 package com.example.umc.study.config;
 
+import com.example.umc.study.auth.constant.SecurityConstants;
 import com.example.umc.study.auth.filter.CustomDaoAuthenticationProvider;
 import com.example.umc.study.auth.filter.JwtExceptionFilter;
 import com.example.umc.study.auth.filter.JwtFilter;
@@ -24,6 +25,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import java.util.Arrays;
 import java.util.stream.Stream;
 
+import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
+
 @Configuration
 //@EnableWebSecurity(debug = true)
 @RequiredArgsConstructor
@@ -32,17 +35,6 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
     private final PrincipalDetailsService principalDetailsService;
-
-    private final String[] swaggerUrls = {"/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**"};
-    private final String[] allowUrls = {
-            "/api/v1/posts/**",
-            "/api/v1/replies/**",
-            "/login"
-    };
-
-    // 허용 Urls
-    private final String[] allowedUrls = Stream.concat(Arrays.stream(swaggerUrls), Arrays.stream(allowUrls))
-            .toArray(String[]::new);
 
     // PasswordEncoerder Been 등록
     @Bean
@@ -91,15 +83,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.PATCH, "/api/v1//posts/{postId}").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/{userId}/posts/{postId}/replies").hasAnyRole("ADMIN")
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/replies/{replyId}").hasAnyRole("ADMIN")
-                        .requestMatchers(allowedUrls).permitAll()
-                        .requestMatchers(HttpMethod.POST, "api/v1/users").permitAll()
-                                .anyRequest().authenticated()
+                        .requestMatchers(SecurityConstants.allowedUrls).permitAll()
+                        .anyRequest().authenticated()
                 );
 
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtFilter(jwtUtil, principalDetailsService),
-                UsernamePasswordAuthenticationFilter.class);
+                LoginFilter.class);
         http.addFilterBefore(new JwtExceptionFilter(), JwtFilter.class);
 
         return http.build();
