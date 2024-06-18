@@ -1,10 +1,7 @@
 package com.example.umc.study.config;
 
 import com.example.umc.study.auth.constant.SecurityConstants;
-import com.example.umc.study.auth.filter.CustomDaoAuthenticationProvider;
-import com.example.umc.study.auth.filter.JwtExceptionFilter;
-import com.example.umc.study.auth.filter.JwtFilter;
-import com.example.umc.study.auth.filter.LoginFilter;
+import com.example.umc.study.auth.filter.*;
 import com.example.umc.study.auth.userdetails.PrincipalDetailsService;
 import com.example.umc.study.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -14,18 +11,12 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-import java.util.Arrays;
-import java.util.stream.Stream;
-
-import static org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers.pathMatchers;
 
 @Configuration
 //@EnableWebSecurity(debug = true)
@@ -35,6 +26,7 @@ public class SecurityConfig {
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
     private final PrincipalDetailsService principalDetailsService;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     // PasswordEncoerder Been 등록
     @Bean
@@ -86,6 +78,13 @@ public class SecurityConfig {
                         .requestMatchers(SecurityConstants.allowedUrls).permitAll()
                         .anyRequest().authenticated()
                 );
+
+        http.exceptionHandling(
+                (configurer ->
+                        configurer
+                                .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
+        );
 
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
