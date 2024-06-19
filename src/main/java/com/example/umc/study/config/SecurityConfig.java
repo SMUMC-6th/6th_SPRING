@@ -1,24 +1,35 @@
 package com.example.umc.study.config;
 
-import com.example.umc.study.config.filter.TestFilter;
-import com.example.umc.study.config.filter.TestFilter2;
+import com.example.umc.study.config.filter.*;
+import com.example.umc.study.config.jwt.JWTUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AnonymousAuthenticationFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
+    private final PrincipalDetailsService principalDetailsService;
+    private final JWTAccessDeniedHandler jwtAccessDeniedHandler;
+    private final JWTAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     private final String[] allowUrl = {
             "/swagger-ui/**",
@@ -40,10 +51,34 @@ public class SecurityConfig {
                 .requestMatchers(allowUrl).permitAll()
                 .anyRequest().authenticated());
         /*http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);*/
-        http.addFilterAfter(new TestFilter2(), AnonymousAuthenticationFilter.class);
-        http.formLogin(withDefaults());
-        http.httpBasic(withDefaults());
+        /*http.addFilterAfter(new TestFilter2(), AnonymousAuthenticationFilter.class);*/
+        http.exceptionHandling(
+                (configurer ->
+                        configurer
+                                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                                .accessDeniedHandler(jwtAccessDeniedHandler)
+                )
+        );
+
+        http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTFilter(jwtUtil, principalDetailsService),
+                UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTExceptionFilter(), JWTFilter.class);
+        // form 로그인 방식 disable
+        http.formLogin(AbstractHttpConfigurer::disable);
+        // http basic 인증 방식 disable
+        http.httpBasic(AbstractHttpConfigurer::disable);
+        // Session Stateless하게 관리
+        http.sessionManagement((session) -> session
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
         return http.build();
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+        return configuration.getAuthenticationManager();
     }
 
     @Bean
