@@ -43,6 +43,9 @@ public class PostConverter {
     public static PostResponseDTO.CreatePostResultDTO torCreatePostResultDTO(Post post) {
         return  PostResponseDTO.CreatePostResultDTO.builder()
                 .postId(post.getId())
+                .title(post.getTitle())
+                .content(post.getContent())
+                .userId(post.getId())
                 .createdAt(post.getCreatedAt())
                 .build();
     }
