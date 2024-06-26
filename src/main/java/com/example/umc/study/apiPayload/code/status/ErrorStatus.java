@@ -20,11 +20,18 @@ public enum ErrorStatus implements BaseErrorCode {
     //post에러
     _NOT_FOUND_POST(HttpStatus.NOT_FOUND, "POST400", "게시글을 찾을 수 없습니다"),
 
-    //reply에러
-    _NOT_FOUND_REPLY(HttpStatus.NOT_FOUND, "REPLY400", "댓글을 찾을 수 없습니다"),
-
     //테스트 에러
-    _TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이것은 테스트");
+    _TEMP_EXCEPTION(HttpStatus.BAD_REQUEST, "TEMP4001", "이것은 테스트"),
+
+    // Reply 에러
+    _NOT_FOUND_REPLY(HttpStatus.NOT_FOUND, "REPLY400", "reply를 찾을 수 없습니다."),
+
+    // auth 관련 에러
+    _TOKEN_NOT_FOUND(HttpStatus.NOT_FOUND, "AUTH400", "토큰을 찾을 수 없습니다."),
+    _AUTH_EXPIRE_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH401", "토큰이 만료되었습니다."),
+    _AUTH_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH402", "토큰이 유효하지 않습니다."),
+
+    _AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AUTH403", "인증 실패");
 
     private final HttpStatus httpStatus;
     private final String code;
