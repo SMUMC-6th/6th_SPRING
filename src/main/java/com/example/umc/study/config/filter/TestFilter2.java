@@ -17,7 +17,8 @@ public class TestFilter2 implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if(authentication == null || authentication.getPrincipal().equals("anonymousUser")) { //사용자의 주체를 반환하여 유효하지않은 사용자인지 판단
-            System.out.println("anonymousUser");
+            System.out.println(authentication.getPrincipal());
+
             filterChain.doFilter(request, response);
         }
 
