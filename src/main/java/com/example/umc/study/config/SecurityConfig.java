@@ -54,6 +54,8 @@ public class SecurityConfig {
             "/v3/api-docs/**",
             //"api/v1/posts/**",
             //"api/v1/replies/**"
+            "/login",
+            "/auth/login/kakao"
     };
 
     @Bean
@@ -97,7 +99,7 @@ public class SecurityConfig {
         http.httpBasic(AbstractHttpConfigurer::disable);
         //생성한 필터 배치하기
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterAt(new JWTFilter(jwtUtil, principalDetailsService), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JWTFilter(jwtUtil, principalDetailsService), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JWTExceptionFilter(), JWTFilter.class);
         //http.addFilterAfter(new TestFilter(), BasicAuthenticationFilter.class);
         //http.addFilterAfter(new TestFilter2(), AnonymousAuthenticationFilter.class);

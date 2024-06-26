@@ -1,6 +1,6 @@
 package com.example.umc.study.domain.enums;
 
 public enum Role {
-    ADMIN,
-    USER
+    ROLE_ADMIN,
+    ROLE_USER
 }
