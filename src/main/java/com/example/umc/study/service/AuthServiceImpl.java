@@ -1,6 +1,5 @@
 package com.example.umc.study.service;
 
-import com.example.umc.study.apiPayload.BaseResponse;
 import com.example.umc.study.config.jwt.JWTUtil;
 import com.example.umc.study.converter.AuthConverter;
 import com.example.umc.study.domain.Role;
