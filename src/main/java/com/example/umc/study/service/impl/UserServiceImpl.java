@@ -4,6 +4,7 @@ import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.UserHandler;
 import com.example.umc.study.converter.UserConverter;
 import com.example.umc.study.domain.User;
+import com.example.umc.study.dto.KakaoDTO;
 import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.UserService;
@@ -25,6 +26,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserRequestDTO.JoinDTO joinDTO) {
         User user = UserConverter.toUser(joinDTO, passwordEncoder);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User createUser(KakaoDTO.KakaoProfile profile) {
+        User user = UserConverter.toUser(profile, "", passwordEncoder);
         return userRepository.save(user);
     }
 
@@ -54,5 +61,10 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(() -> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         user.update(updateUserDTO.getName());
         return user;
+    }
+
+    @Override
+    public boolean isExistByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
