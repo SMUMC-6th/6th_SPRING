@@ -28,7 +28,9 @@ public enum ErrorStatus implements BaseErrorCode {
     // Auth 에러
     _AUTH_EXPIRE_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH401_1", "token이 만료되었습니다."),
     _AUTH_INVALID_TOKEN(HttpStatus.UNAUTHORIZED, "AUTH401_2", "token이 유효하지 않습니다."),
-    _AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AUTH401_3", "인증에 실패하였습니다.");
+    _AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AUTH401_3", "인증에 실패하였습니다."),
+
+    _INVALID_REQUEST_CODE(HttpStatus.BAD_REQUEST,"OAUTH400","잘못된 요청입니다.");
 
 
     private final HttpStatus httpStatus;
