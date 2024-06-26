@@ -45,7 +45,7 @@ public class UserConverter {
 
     public static User toUser(KakaoDTO.KakaoProfile profile, String password, PasswordEncoder encoder) {
         return User.builder()
-                .email(profile.getKakao_account().getProfile().getNickname() + profile.getId())
+                .email(profile.getKakao_account().getEmail())
                 .name(profile.getKakao_account().getProfile().getNickname())
                 .role("ROLE_USER")
                 .password(encoder.encode(password))

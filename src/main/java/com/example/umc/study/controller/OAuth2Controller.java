@@ -32,11 +32,11 @@ public class OAuth2Controller {
         KakaoDTO.KakaoProfile profile = oAuthService.kakaoLogin(accessCode);
 
         // email 접근이 안돼서 nickname + id로 했습니다.
-        if (!userService.isExistByEmail(profile.getKakao_account().getProfile().getNickname() + profile.getId())) {
+        if (!userService.isExistByEmail(profile.getKakao_account().getEmail())) {
             userService.createUser(profile);
         }
         else {
-            response.addHeader("Authorization", "Bearer " + jwtUtil.createAccessToken(profile.getKakao_account().getProfile().getNickname() + profile.getId(), "ROLE_USER"));
+            response.addHeader("Authorization", "Bearer " + jwtUtil.createAccessToken(profile.getKakao_account().getEmail(), "ROLE_USER"));
         }
         return BaseResponse.onSuccess(null);
 
