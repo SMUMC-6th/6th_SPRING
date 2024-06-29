@@ -36,4 +36,9 @@ public class Reply extends BaseEntity {
         post = setPost;
     }
 
+    public void update(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
 }

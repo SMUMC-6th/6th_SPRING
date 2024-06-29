@@ -39,7 +39,7 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewListDTO(userList));
     }
 
-    @DeleteMapping("users/{userId}")
+    @DeleteMapping("/users/{userId}")
     public BaseResponse<String> deleteUser(
             @PathVariable Long userId) {
         userService.deleteUser(userId);
