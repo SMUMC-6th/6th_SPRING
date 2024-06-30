@@ -1,5 +1,6 @@
 package com.example.umc.study.service.impl;
 
+import com.example.umc.study.dto.KakaoDTO;
 import com.example.umc.study.service.UserService;
 import com.example.umc.study.apiPayload.code.status.ErrorStatus;
 import com.example.umc.study.apiPayload.exception.handler.UserHandler;
@@ -54,5 +55,16 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId).orElseThrow(()-> new UserHandler(ErrorStatus._NOT_FOUND_USER));
         user.update(updateUserDTO.getName());
         return user;
+    }
+
+    @Override
+    public User createUser(KakaoDTO.KakaoProfile profile) {
+        User user = UserConverter.toUser(profile, "", passwordEncoder);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public boolean isExistByEmail(String email) {
+        return userRepository.existsByEmail(email);
     }
 }
