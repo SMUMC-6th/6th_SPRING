@@ -6,10 +6,8 @@ import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.request.UserRequestDTO;
 import com.example.umc.study.dto.response.UserResponseDTO;
 import com.example.umc.study.service.AuthService;
-import com.example.umc.study.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
