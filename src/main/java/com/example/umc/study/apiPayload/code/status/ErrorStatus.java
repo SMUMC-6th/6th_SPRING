@@ -33,7 +33,10 @@ public enum ErrorStatus implements BaseErrorCode {
     // 인증관련
     _AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "AUTH401_0", "인증에 실패했습니다."),
     _BAD_CREDENTIALS(HttpStatus.UNAUTHORIZED, "AUTH401_1", "비밀번호를 잘못 입력했습니다."),
-    _ACCOUNT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "AUTH401_4", "아이디를 잘못 입력했습니다. 회원가입 후 이용해주세요.");
+    _ACCOUNT_NOT_FOUND(HttpStatus.UNAUTHORIZED, "AUTH401_4", "아이디를 잘못 입력했습니다. 회원가입 후 이용해주세요."),
+
+    // 파싱 에러
+    _PARSING_ERROR(HttpStatus.BAD_REQUEST, "PARSE400", "데이터 파싱 중 오류가 발생했습니다.");
 
     private final HttpStatus httpStatus;
     private final String code;

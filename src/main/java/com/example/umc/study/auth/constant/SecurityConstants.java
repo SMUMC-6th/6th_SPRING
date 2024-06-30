@@ -9,7 +9,8 @@ public class SecurityConstants {
     public static final String[] allowUrls = {
             "/api/v1/posts/**",
             "/api/v1/replies/**",
-            "/login"
+            "/login",
+            "/auth/login/kakao/**"
     };
 
     // 허용 Urls
