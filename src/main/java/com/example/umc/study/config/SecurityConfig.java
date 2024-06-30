@@ -89,7 +89,7 @@ public class SecurityConfig {
         http.addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
                 UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtFilter(jwtUtil, principalDetailsService),
-                LoginFilter.class);
+                UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtExceptionFilter(), JwtFilter.class);
 
         return http.build();
