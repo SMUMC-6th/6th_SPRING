@@ -7,7 +7,12 @@ import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.dto.UserResponseDTO;
 import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.server.reactive.HttpHandler;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -53,4 +58,5 @@ public class UserController {
         User user = userService.updateUser(updateUserDTO, userId);
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
+
 }

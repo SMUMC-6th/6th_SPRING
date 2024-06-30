@@ -121,7 +121,8 @@ public class SecurityConfig {
             "/swagger-resources/**",
             "/v3/api-docs/**",
             "/api/v1/posts/**",
-            "api/v1/replies/**"
+            "api/v1/replies/**",
+            "/auth/login/kakao"
     };
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
