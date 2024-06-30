@@ -1,13 +1,17 @@
 package com.example.umc.study.controller;
 
 import com.example.umc.study.apiPayload.BaseResponse;
+import com.example.umc.study.config.jwt.JWTUtil;
 import com.example.umc.study.converter.UserConverter;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.dto.UserResponseDTO;
+import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.PostService;
 import com.example.umc.study.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +24,15 @@ public class UserController {
 
     private final UserService userService;
     private final PostService postService;
+    private final JWTUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    @Value("${spring.kakao.auth.client}")
+    private String client;
+
+    @Value("${spring.kakao.auth.redirect}")
+    private String redirect;
+
 
     @PostMapping("/users")
     public BaseResponse<UserResponseDTO.JoinResultDTO> createUser(@RequestBody UserRequestDTO.JoinDTO joinDTO) {
@@ -51,7 +64,5 @@ public class UserController {
         User user = userService.updateUser(updateUserDTO, userId);
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
-
-
 
 }
