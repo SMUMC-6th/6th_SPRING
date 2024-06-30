@@ -1,6 +1,7 @@
 package com.example.umc.study.converter;
 
 import com.example.umc.study.domain.User;
+import com.example.umc.study.dto.KakaoDTO;
 import com.example.umc.study.dto.UserRequestDTO;
 import com.example.umc.study.dto.UserResponseDTO;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,6 +40,15 @@ public class UserConverter {
 
         return  UserResponseDTO.UserPreviewListDTO.builder()
                 .userPreviewDTOList(userPreviewDTOList)
+                .build();
+    }
+
+    public static User toUser(KakaoDTO.KakaoProfile profile, String password, PasswordEncoder encoder) {
+        return User.builder()
+                .email(profile.getKakao_account().getEmail())
+                .name(profile.getKakao_account().getProfile().getNickname())
+                .role("ROLE_USER")
+                .password(encoder.encode(password))
                 .build();
     }
 }
