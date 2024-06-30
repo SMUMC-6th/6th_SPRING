@@ -59,15 +59,4 @@ public class UserController {
         return BaseResponse.onSuccess(UserConverter.toUserPreviewDTO(user));
     }
 
-    //카카오 로그인
-//    @GetMapping("auth/login/kakao")
-//    public void kakaoLogin(@RequestParam("code") String accessCode) {
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders headers = new HttpHeaders();
-//
-//        headers.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-//        params.add("grant_type", "authorization_code");
-//        params.add("client_id", cl);
-//    }
 }
