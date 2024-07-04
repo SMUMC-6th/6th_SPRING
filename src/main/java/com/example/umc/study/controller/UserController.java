@@ -5,8 +5,12 @@ import com.example.umc.study.converter.UserConverter;
 import com.example.umc.study.domain.User;
 import com.example.umc.study.dto.UserRequestDto;
 import com.example.umc.study.dto.UserResponseDto;
+import com.example.umc.study.repository.UserRepository;
 import com.example.umc.study.service.UserService;
+import com.example.umc.study.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +22,14 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    @Value("${spring.kakao.auth.client}")
+    private String client;
+
+    @Value("${spring.kakao.auth.redirect}")
+    private String redirect;
 
     @PostMapping("users")
     public BaseResponse<UserResponseDto.JoinResultDto> createUser(

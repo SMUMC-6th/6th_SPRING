@@ -23,7 +23,6 @@ public class UserConverter {
         return UserResponseDto.JoinResultDto.builder()
                 .userId(user.getId())
                 .createAt(user.getCreatedAt())
-                .role(String.valueOf(user.getRole()))
                 .build();
     }
 

@@ -25,6 +25,9 @@ public enum ErrorStatus implements BaseErrorCode {
     // reply 에러
     _NOT_FOUND_REPLY(HttpStatus.NOT_FOUND, "REPLY400", "reply를 찾을 수 없습니다."),
 
+    // OAuth 에러
+    _INVALID_REQUEST_CODE(HttpStatus.BAD_REQUEST,"OAUTH400", "OAuth 잘못된 요청입니다." ),
+
     // token 에러
     _AUTH_EXPIRE_TOKEN(HttpStatus.NOT_ACCEPTABLE, "TOKEN400", "토큰이 만료되었습니다."),
     _AUTH_INVALID_TOKEN(HttpStatus.NOT_ACCEPTABLE, "TOKEN401", "토큰이 부적절합니다."),

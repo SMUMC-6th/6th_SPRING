@@ -17,7 +17,6 @@ public class UserResponseDto {
     public static class JoinResultDto {
 
         private Long userId;
-        private String role;
         private LocalDateTime createAt;
 
     }
